@@ -1,0 +1,53 @@
+{
+    "teste_cidade": {
+        "validations": [
+            {
+                "relationship": "and",
+                "field": "cidade",
+                "operator": "equal",
+                "target": "Rio de Janeiro"
+            },
+            {
+                "field": "idade",
+                "operator": "equal",
+                "target": "15"
+            }
+        ]
+    },
+
+    "teste_nome": {
+        "validations": [
+            {
+                "field": "name",
+                "property": "length",
+                "operator":"bigger",
+                "target":"10"
+            }, 
+            {
+                "field": "cidade",
+                "operator": "equal",
+                "target": "Rio de Janeiro"
+            }
+        ]
+    },
+
+    "teste_nome_cidade": {
+        "validations": [
+            {
+                "operator": "and",
+                "condition1": {
+                    "field": "idade",
+                    "operator": "equal",
+                    "target": "15"
+                },
+                "condition2": {
+                    "field": "name",
+                    "property":"length",
+                    "operator": "bigger",
+                    "target": "31"
+                }
+            }
+        ]
+    }
+
+}

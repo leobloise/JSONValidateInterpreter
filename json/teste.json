@@ -1,0 +1,114 @@
+{
+    "teste": {
+        "validations": [{
+                "relationship": "and",
+                "field": "name",
+                "property": "length",
+                "operator": "bigger",
+                "target": "9"
+            },
+            {
+                "field": "idade",
+                "operator": "equal",
+                "target": "9"
+            }, 
+            {
+                "relationship": "or",
+                "operator": "or",
+                "condition1": {
+                    "field": "idade",
+                    "operator": "bigger",
+                    "target": "9"
+                },
+                "condition2": {
+                    "field": "idade",
+                    "operator": "smaller",
+                    "target": "9"
+                },
+                "condition3": {
+                    "field": "name",
+                    "property":"length",
+                    "operator": "bigger",
+                    "target": "100"
+                }
+            },
+            {
+                "operator": "and",
+                "condition1": {
+                    "field": "idade",
+                    "operator": "equal",
+                    "target": "9"
+                },
+                "condition2": {
+                    "field": "name",
+                    "property":"length",
+                    "operator": "smaller",
+                    "target": "100"
+                }
+            },
+            {
+                "operator": "or",
+                "condition1": {
+                    "field": "idade",
+                    "operator": "equal",
+                    "target": "9"
+                },
+                "condition2": {
+                    "field": "idade",
+                    "operator": "bigger",
+                    "target": "9"
+                }, 
+                "validation": {
+                    "operator": "and",
+                    "validations": [
+                        {
+                            "field": "name",
+                            "property": "length",
+                            "operator": "bigger",
+                            "target": "9"
+                        },
+                        {
+                            "field": "idade",
+                            "operator": "equal",
+                            "target": "9"
+                        }, 
+                        {
+                            "operator": "or",
+                            "condition1": {
+                                "field": "idade",
+                                "operator": "bigger",
+                                "target": "9"
+                            },
+                            "condition2": {
+                                "field": "idade",
+                                "operator": "smaller",
+                                "target": "9"
+                            },
+                            "condition3": {
+                                "field": "name",
+                                "property":"length",
+                                "operator": "bigger",
+                                "target": "100"
+                            }
+                        },
+                        {
+                            "operator": "and",
+                            "condition1": {
+                                "field": "idade",
+                                "operator": "equal",
+                                "target": "9"
+                            },
+                            "condition2": {
+                                "field": "name",
+                                "property":"length",
+                                "operator": "smaller",
+                                "target": "100"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
+    
