@@ -1,3 +1,6 @@
+const { CommonValidations } = require('./CommonValidations.js');
+const {InterpreterTranslator} = require('./InterpreterTranslator.js')
+
 class JSONValidatorInterpreter {
 
     constructor(targetObject, validateJson) {
@@ -7,6 +10,13 @@ class JSONValidatorInterpreter {
         this._object.__proto__.toString = function() {
             return this.constructor.name;
         }
+
+        this._translator = (conditions) => {
+            
+            let realTranslator = new InterpreterTranslator(conditions)
+            return realTranslator.getTranslatedResult();
+        }
+
     }
 
     createAllConditions() {
@@ -33,15 +43,35 @@ class JSONValidatorInterpreter {
         }
         
         validations.forEach(validation => {
+
             if(validation.validation) { 
                 let results = this._createConditions(validation.validation.validations)
                 
                 results.forEach(result => conditions.conditionsSolved.push(result))
                 conditions.conditionsSolved.push(this._getCorrectMathOperationFromOperationLogic(validation.validation))
             }
-            
-            if(validation.operator === "or") {
 
+            if(validation.func) {
+               let results = this._applyCommonValidations(validation);
+               conditions.conditionsSolved.push(results)
+               return;
+            }
+
+            if(validation.set && !validation.validation) {
+               
+                let results = this._createNewFieldValidationLogic(validation);
+                
+                results.forEach(result => {
+                    result.forEach(eachOne => {
+                        conditions.conditionsSolved.push(eachOne)
+                    })
+                })
+                console.log(this._object)
+                return;
+            }
+
+            if(validation.operator === "or") {
+                
                 const resultLogicOrCondition = this._logicOrConditions(validation)
                 conditions.conditionsSolved.push(Boolean(resultLogicOrCondition))
 
@@ -81,9 +111,69 @@ class JSONValidatorInterpreter {
             }
 
         })
-
         return conditions.conditionsSolved
 
+    }
+
+    _applyCommonValidations(validation) {
+        
+        let commonValidation = new CommonValidations(this._object[validation.field])
+
+        if(typeof commonValidation[validation.func] !== 'function'){
+            throw new Error('This function does not exist')
+        }
+
+        return commonValidation[validation.func]();
+    }
+
+    _createNewFieldValidationLogic(validation) {
+
+        if(validation.validationsNeed) {
+
+            let results = [this._createConditions(validation.validationsNeed)]
+
+            let resultToValidate = this._translator(results)[0]
+            
+            let newField = validation.set;
+            
+            let permission = (validation.expected == 'false')?false:true;
+
+            let value = (validation.value)?validation.value:undefined;
+
+            if(value.includes('prop:')) {
+
+                value = value.split('prop:')
+                value = this._verifyAndReturnProperlyField(this._object, value[1].trim())
+            
+            }
+
+            
+
+            this._createNewProp(this._object, newField, value, resultToValidate.condition, permission)
+
+            return results;
+        }
+
+         let newField = validation.set;
+         let value = (validation.value)?validation.value:undefined;
+
+         this._createNewProp(this._object, newField, value);
+
+         return this._createConditions(validation);
+
+    }
+
+    _createNewProp(object, newField, value = 'default', resultFromCondtion = true, permission = true) {
+        
+        if(Boolean(resultFromCondtion) != Boolean(permission)) 
+            return;
+        
+        if(object[newField] === undefined)
+            object[newField] = value;
+        else
+            throw new Error(`${newField} has already been declared at ${object.constructor.name}`)
+        
+        return;
     }
 
     /**
@@ -126,8 +216,6 @@ class JSONValidatorInterpreter {
      */
 
     _validateAndGetConditions(validation) {
-
-        
         let conditions = []
     
         this._verifyIfItExistsInsideObject(validation);
@@ -314,7 +402,6 @@ class JSONValidatorInterpreter {
      */
 
     _verifyIfItExistsInsideObject(validation) {
-
         if(!this._object[validation.field])
             throw new Error(`${validation.field} does not exist in ${this._object}`)
     }

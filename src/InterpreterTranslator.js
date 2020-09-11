@@ -10,9 +10,8 @@ class InterpreterTranslator {
         
         if(typeof conditions !== 'object')
             throw new Error('I just translate arrays')
-
+        
         conditions.forEach(condition => {
-            
             if(typeof condition !== 'object') 
                 throw new Error('This array is not valid')
             

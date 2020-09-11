@@ -197,5 +197,57 @@
                 "target": "prop: study"
             }
         ]
+    },
+    
+    "personValidation_criaNovoCampoemTempoDeExecucaoCasoSejaTrue": {
+        "validations":[
+            {
+                "set": "newCampo",
+                "expected": "true",
+                "value": "prop: name",
+                "validationsNeed": [
+                    {
+                        "relationship":"and",
+                        "operator": "or",
+                        "condition1": {
+                            "field": "age",
+                            "operator": "equal",  
+                            "target": "20"
+                        },
+                        "condition2":{
+                            "field": "job",
+                            "operator": "strictequal",
+                            "type": "Boolean",
+                            "target": "true"
+                        }
+                    }, 
+                    {
+                        "field": "name",
+                        "property": "length",
+                        "operator": "bigger",
+                        "target": "10",
+                        "res":"res: Eu funciono, viu ?"
+                    }
+                ]
+            }
+        ]
+    },
+
+    "personValidation_validaCampoCriadoEmTempoDeExecucao": {
+        "validations":[
+            {
+                "field": "newCampo",
+                "operator":"equal",
+                "target": "Leonardo Cardoso da Silva Bloise"
+            }
+        ]
+    },
+    "personValidation_ValidaSeOcampoExiste": {
+        "validations":[
+            {
+                "func": "isEmpty",
+                "field": "name"
+            }
+        ]
     }
 }

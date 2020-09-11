@@ -11,8 +11,8 @@ class TestPersonValidation {
             age: person['age'] || 20,
             cpf: person['cpf'] || '182.080.157-84',
             address: person['address'] || 'St. Wall Street, 911',
-            job: person['job']|| 'false',
-            study: person['study'] || 'false'
+            job: person['job']|| 'true',
+            study: person['study'] || 'true'
         
         }
 
