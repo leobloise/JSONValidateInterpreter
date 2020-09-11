@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Caso me entregue um json na formatacao correta, irei criar as condicionais dele para voce",
   "main": "JSONValidatorInterpreter",
+  "scripts": {
+    "test": "node index"
+  },
   "keywords": [],
   "author": "Leonardo C.S. Bloise",
   "license": "MIT"

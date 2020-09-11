@@ -1,0 +1,201 @@
+{
+    "personValidation_sample1": {
+        "validations": [
+            {
+                "field": "name",
+                "operator": "equal",
+                "target": "Leonardo Cardoso da Silva Bloise"
+            }
+        ]
+    },
+    "personValidation_sample2_property": {
+        "validations": [
+            {
+                "field": "name",
+                "property": "length",
+                "operator": "bigger",
+                "target": "10"
+            }
+        ]
+    },
+    "personValidation_age_relationship_*":
+    {
+        "validations":[
+            {
+                "relationship": "and",
+                "field": "age",
+                "operator": "equal",  
+                "target": "20"
+            },
+            {
+                "field": "job",
+                "operator": "equal",
+                "type": "Boolean",
+                "target": "true"
+            }
+        ]
+    },
+    "personValidation_age_usingand_true": {
+        "validations": [
+            {
+                "operator": "and",
+                "condition1": {
+                    "field": "age",
+                    "operator": "equal",  
+                    "target": "20"
+                },
+                "condition2":{
+                    "field": "job",
+                    "operator": "strictequal",
+                    "type": "Boolean",
+                    "target": "true"
+                }
+            }
+        ]
+    },
+    "personValidation_age_usingand_false": {
+        "validations": [
+            {
+                "operator": "and",
+                "condition1": {
+                    "field": "age",
+                    "type":"Number",
+                    "operator": "equal",  
+                    "target": "21"
+                },
+                "condition2":{
+                    "field": "job",
+                    "operator": "equal",
+                    "type": "Boolean",
+                    "target": "false"
+                }
+            }
+        ]
+    },
+    "personValidation_age_usingor_true": {
+        "validations": [
+            {
+                "operator": "or",
+                "condition1": {
+                    "field": "age",
+                    "type":"Number",
+                    "operator": "equal",  
+                    "target": "21"
+                },
+                "condition2":{
+                    "field": "job",
+                    "operator": "equal",
+                    "type": "Boolean",
+                    "target": "true"
+                }
+            }
+        ]
+    },
+    "personValidation_age_usingor_false": {
+        "validations": [
+            {
+                "operator": "or",
+                "condition1": {
+                    "field": "age",
+                    "type":"Number",
+                    "operator": "equal",  
+                    "target": "21231"
+                },
+                "condition2":{
+                    "field": "job",
+                    "operator": "equal",
+                    "type": "Boolean",
+                    "target": ""
+                }
+            }
+        ]
+    },
+    "personValidation_parenteses_true": {
+        "validations": [
+            {
+                "field": "name",
+                "operator": "equal",
+                "target": "Leonardo Cardoso da Silva Bloise",
+                "validation": {
+                    "operator": "and",
+                    "validations":[
+                        {
+                            "operator": "and",
+                            "condition1":{
+                                
+                                    "field": "age",
+                                    "operator": "equal",  
+                                    "target": "20"
+                            }, 
+
+                            "condition2": {
+                                "field": "age",
+                                "operator": "equal",  
+                                "target": "20"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "personValidation_customFunctions_true": {
+        "validations":[
+            {
+                "field": "methods",
+                "property": "cpfPlusAge",
+                "operator": "equal",
+                "target": "182.080.157-8420"
+            }
+        ]
+    }, 
+    "personValidation_sample2_property_res": {
+        "validations": [
+            {
+                "field": "name",
+                "property": "length",
+                "operator": "bigger",
+                "target": "10",
+                "res": "res: Eu funciono, viu ?"
+            }
+        ]
+    }, 
+    "personValidation_parenteses_true_with_message": {
+        "validations": [
+            {
+                "validation": {
+                    "operator": "and",
+                    "validations":[
+                        {
+                            "operator": "and",
+                            "condition1":{
+                                
+                                    "field": "age",
+                                    "operator": "equal",  
+                                    "target": "20"
+                            }, 
+
+                            "condition2": {
+                                "field": "age",
+                                "operator": "equal",  
+                                "target": "20"
+                            }
+                        }
+                    ]
+                },   
+                "field": "name",
+                "operator": "equal",
+                "target": "Leonardo Cardoso da Silva Bloise"
+            }
+        ]
+    },
+    "personValidation_comparaDoisCamposDaMesmaEstrutura_true": {
+        "validations":[
+            {
+                "field": "job",
+                "operator": "equal",
+                "target": "prop: study"
+            }
+        ]
+    }
+}
