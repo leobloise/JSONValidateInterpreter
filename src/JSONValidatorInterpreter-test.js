@@ -1,6 +1,3 @@
-const { CommonValidations } = require('./CommonValidations.js');
-const {InterpreterTranslator} = require('./InterpreterTranslator.js')
-
 class JSONValidatorInterpreter {
 
     constructor(targetObject, validateJson) {
@@ -40,10 +37,8 @@ class JSONValidatorInterpreter {
 
         let  conditions = {
             conditionsSolved: []
-        }
-        
+		}
         validations.forEach(validation => {
-
             if(validation.validation) { 
                 let results = this._createConditions(validation.validation.validations)
                 
@@ -66,7 +61,6 @@ class JSONValidatorInterpreter {
                         conditions.conditionsSolved.push(eachOne)
                     })
                 })
-                console.log(this._object)
                 return;
             }
 
@@ -217,7 +211,12 @@ class JSONValidatorInterpreter {
 
     _validateAndGetConditions(validation) {
         let conditions = []
-    
+		if(validation.func) {
+			let results = this._applyCommonValidations(validation);
+			conditions.push(results)
+			return conditions;
+		}
+
         this._verifyIfItExistsInsideObject(validation);
 
         // console.log('\nUntreated validation.field: ', validation.field  + '\n\n')
@@ -339,6 +338,7 @@ class JSONValidatorInterpreter {
 
     _logicOrConditions(validation) {
 
+		
         let quantityValidations = this._verifyIfQuantityIsCorrectAndGetIt(validation);
 
         let logicConditions = []
@@ -406,5 +406,3 @@ class JSONValidatorInterpreter {
             throw new Error(`${validation.field} does not exist in ${this._object}`)
     }
 }
-
-exports.JSONValidatorInterpreter = JSONValidatorInterpreter;

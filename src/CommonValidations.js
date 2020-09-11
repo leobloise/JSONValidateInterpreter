@@ -35,12 +35,24 @@ class CommonValidations {
             empty = true;
         
         return empty;
-    }
+	}
+	
+	isZero() {
+		let valueTreatedToBeValidate = this._value;
+
+		if(typeof valueTreatedToBeValidate != 'number') 
+			valueTreatedToBeValidate = Number(valueTreatedToBeValidate)
+		
+		switch(valueTreatedToBeValidate) {
+			case 0:
+				return true;
+			default: 
+				return false;
+		}
+	}
 
     get originalValue() {
         return this._value;
     }
 
 }
-
-exports.CommonValidations = CommonValidations;
