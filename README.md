@@ -4,4 +4,4 @@ Classe feita em javascript que pode receber um JSON com uma determinada estrutur
 
 <h2> Testando </h2>
 
-Para testar, abra o cmd e navegue ao diretorio da pasta. Depois disso, digite: node teste.js
+Para testar, abra o cmd e navegue ao diretorio da pasta. Depois disso, digite: npm test. 
