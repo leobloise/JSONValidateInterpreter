@@ -207,7 +207,6 @@
                 "value": "prop: name",
                 "validationsNeed": [
                     {
-                        "relationship":"and",
                         "operator": "or",
                         "condition1": {
                             "field": "age",
@@ -220,13 +219,6 @@
                             "type": "Boolean",
                             "target": "true"
                         }
-                    }, 
-                    {
-                        "field": "name",
-                        "property": "length",
-                        "operator": "bigger",
-                        "target": "10",
-                        "res":"res: Eu funciono, viu ?"
                     }
                 ]
             }

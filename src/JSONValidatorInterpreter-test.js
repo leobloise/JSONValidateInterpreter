@@ -1,3 +1,6 @@
+const {InterpreterTranslator} = require('./InterpreterTranslator.js')
+const {CommonValidations} = require('./CommonValidations.js')
+
 class JSONValidatorInterpreter {
 
     constructor(targetObject, validateJson) {
@@ -55,12 +58,7 @@ class JSONValidatorInterpreter {
             if(validation.set && !validation.validation) {
                
                 let results = this._createNewFieldValidationLogic(validation);
-                
-                results.forEach(result => {
-                    result.forEach(eachOne => {
-                        conditions.conditionsSolved.push(eachOne)
-                    })
-                })
+                conditions.conditionsSolved.push(results)
                 return;
             }
 
@@ -140,34 +138,26 @@ class JSONValidatorInterpreter {
                 value = this._verifyAndReturnProperlyField(this._object, value[1].trim())
             
             }
-
-            
-
-            this._createNewProp(this._object, newField, value, resultToValidate.condition, permission)
-
-            return results;
+            return this._createNewProp(this._object, newField, value, resultToValidate.condition, permission)
         }
 
          let newField = validation.set;
          let value = (validation.value)?validation.value:undefined;
 
-         this._createNewProp(this._object, newField, value);
-
-         return this._createConditions(validation);
-
+         return this._createNewProp(this._object, newField, value);
     }
 
     _createNewProp(object, newField, value = 'default', resultFromCondtion = true, permission = true) {
         
         if(Boolean(resultFromCondtion) != Boolean(permission)) 
-            return;
+            return false;
         
         if(object[newField] === undefined)
             object[newField] = value;
         else
             throw new Error(`${newField} has already been declared at ${object.constructor.name}`)
         
-        return;
+        return true;
     }
 
     /**
@@ -406,3 +396,5 @@ class JSONValidatorInterpreter {
             throw new Error(`${validation.field} does not exist in ${this._object}`)
     }
 }
+
+exports.JSONValidatorInterpreter = JSONValidatorInterpreter;

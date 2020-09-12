@@ -56,3 +56,5 @@ class CommonValidations {
     }
 
 }
+
+exports.CommonValidations = CommonValidations
