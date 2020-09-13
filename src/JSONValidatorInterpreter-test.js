@@ -357,10 +357,8 @@ class JSONValidatorInterpreter {
         let logicConditions = []
 
         for(let i = 1; i <= quantityValidations; i++) {
-
             let condition = 'condition'+String(i);
             logicConditions.push(this._validateAndGetConditions(validation[condition])[0])
-        
         }
 
         return logicConditions.reduce((acumulator, logicCondition) => acumulator * Number(logicCondition), 1)
