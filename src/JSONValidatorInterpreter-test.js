@@ -108,13 +108,14 @@ class JSONValidatorInterpreter {
     }
 
     _applyCommonValidations(validation) {
-        
-    	let object = this._object[validation.field]
 
-    	if(validation.property) {
-    		object = object[validation.property];
-    	}
- 
+		let object = this._object[validation.field];
+		
+
+		if(validation.property) {
+			object = object[validation.property]
+		}
+        
         let commonValidation = new CommonValidations(object)
 
         if(typeof commonValidation[validation.func] !== 'function'){
@@ -216,26 +217,25 @@ class JSONValidatorInterpreter {
      */
 
     _validateAndGetConditions(validation) {
+
         let conditions = []
-		if(validation.func) {
+        
+        if(validation.func) {
 			let results = this._applyCommonValidations(validation);
 			conditions.push(results)
 			return conditions;
 		}
 
         this._verifyIfItExistsInsideObject(validation);
-
-        // console.log('\nUntreated validation.field: ', validation.field  + '\n\n')
-        // console.log('Untreated validation.property: ', validation.property  + '\n\n')
-        // console.log('Untreated validation.target: ', validation.target  + '\n\n')
         
         let field = (typeof validation.property == 'string')?this._verifyAndReturnProperlyField(this._object[`${validation.field}`], validation.property):this._object[`${validation.field}`];
 
         let target = (typeof validation.type == 'string')?this._transformToSpecifcyType(this._verifyAndReturnProperlyTarget(validation.target), validation.type):this._verifyAndReturnProperlyTarget(validation.target)
+		
+		if(typeof field == 'function') {
+			field = field();
+		}
 
-        // console.log('Treated field: ', field + '\n\n')
-        // console.log('Treated target ', target  + '\n\n')
-        
         conditions.push(this._getConditionResult(field, validation.operator, target));
     
         return conditions;
