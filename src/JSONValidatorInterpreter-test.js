@@ -37,7 +37,6 @@ class JSONValidatorInterpreter {
     }
 
     _createConditions(validations) {
-
         let  conditions = {
             conditionsSolved: []
 		}
@@ -51,7 +50,12 @@ class JSONValidatorInterpreter {
 
             if(validation.func) {
                let results = this._applyCommonValidations(validation);
-               conditions.conditionsSolved.push(results)
+			   conditions.conditionsSolved.push(results)
+			   if(this._verifyRelationship(validation)) 
+                    conditions.conditionsSolved.push(this._verifyRelationship(validation))
+
+                if(validation.res) 
+                    conditions.conditionsSolved.push(validation.res)
                return;
             }
 
@@ -64,7 +68,7 @@ class JSONValidatorInterpreter {
 
             if(validation.operator === "or") {
                 
-                const resultLogicOrCondition = this._logicOrConditions(validation)
+				const resultLogicOrCondition = this._logicOrConditions(validation)
                 conditions.conditionsSolved.push(Boolean(resultLogicOrCondition))
 
                 if(this._verifyRelationship(validation)) 
@@ -72,7 +76,7 @@ class JSONValidatorInterpreter {
 
                 if(validation.res) 
                     conditions.conditionsSolved.push(validation.res)
-                        
+
                 return;
             }
 
@@ -217,10 +221,9 @@ class JSONValidatorInterpreter {
      */
 
     _validateAndGetConditions(validation) {
-
-        let conditions = []
-        
-        if(validation.func) {
+		let conditions = []
+		
+		if(validation.func) {
 			let results = this._applyCommonValidations(validation);
 			conditions.push(results)
 			return conditions;
@@ -244,7 +247,7 @@ class JSONValidatorInterpreter {
 
     _verifyAndReturnProperlyField(field, property){
         if(!field.hasOwnProperty(property) || typeof field[property] === 'undefined') 
-            throw new Error('This property is not defined')
+            return undefined;
 
         if(typeof field[property] !== 'function')
             return field[property]
@@ -352,11 +355,12 @@ class JSONValidatorInterpreter {
         for(let i = 1; i <= quantityValidations; i++) {
 
             let condition = 'condition'+String(i);
-            
-            logicConditions.push(this._validateAndGetConditions(validation[condition])[0])
+           
+            logicConditions.push(this._validateAndGetConditions(validation[condition]))
         }
 
-        return logicConditions.reduce((acumulator, logicCondition) => acumulator + Number(logicCondition))
+		logicConditions.forEach(logicCondition => console.log(logicCondition))
+        return logicConditions.reduce((acumulator, logicCondition) => Number(acumulator) + Number(logicCondition[0]), 0)
     }
 
     /**
