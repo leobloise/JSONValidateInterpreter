@@ -109,7 +109,13 @@ class JSONValidatorInterpreter {
 
     _applyCommonValidations(validation) {
         
-        let commonValidation = new CommonValidations(this._object[validation.field])
+    	let object = this._object[validation.field]
+
+    	if(validation.property) {
+    		object = object[validation.property];
+    	}
+ 
+        let commonValidation = new CommonValidations(object)
 
         if(typeof commonValidation[validation.func] !== 'function'){
             throw new Error('This function does not exist')
@@ -146,6 +152,16 @@ class JSONValidatorInterpreter {
 
          return this._createNewProp(this._object, newField, value);
     }
+
+    /**
+     * @method _createNewProp
+     * @summary Tenta criar um campo novo em tempo de execucao e, caso nao consiga, ira retornar false ou um erro.
+     * @param {*} object 
+     * @param {*} newField 
+     * @param {*} value 
+     * @param {*} resultFromCondtion 
+     * @param {*} permission 
+     */
 
     _createNewProp(object, newField, value = 'default', resultFromCondtion = true, permission = true) {
         
