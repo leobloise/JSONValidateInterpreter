@@ -33,7 +33,6 @@ class CommonValidations {
 
         if(lengthOfValue == 0)
             empty = true;
-        
         return empty;
 	}
 	
@@ -51,10 +50,20 @@ class CommonValidations {
 		}
 	}
 
+	isNotNumeric() {
+		let valueTreatedToBeValidate = this._value;
+		if(typeof valueTreatedToBeValidate!= "string" )
+			valueTreatedToBeValidate = String(valueTreatedToBeValidate);
+		
+		var num = /^[0-9]+$/;
+		return !(num.test(valueTreatedToBeValidate));
+	}
+
     get originalValue() {
         return this._value;
     }
 
 }
+
 
 exports.CommonValidations = CommonValidations

@@ -7,8 +7,11 @@ class Validacoes {
     }
 
     _execute() {
-        let interpreter = new JSONValidatorInterpreter(this._object, this._json);
-        let translator = new InterpreterTranslator(interpreter.createAllConditions());
+		
+		let interpreter = new JSONValidatorInterpreter(this._object, this._json);
+		let results = interpreter.createAllConditions()
+		
+		let translator = new InterpreterTranslator(results);
 
         return translator.getTranslatedResult();
     }

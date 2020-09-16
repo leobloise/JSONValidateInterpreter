@@ -153,7 +153,14 @@ class JSONValidatorInterpreter {
         }
 
          let newField = validation.set;
-         let value = (validation.value)?validation.value:undefined;
+		 let value = (validation.value)?validation.value:undefined;
+		 
+		 if(value.includes('prop:')) {
+
+			value = value.split('prop:')
+			value = this._verifyAndReturnProperlyField(this._object, value[1].trim())
+		
+		}
 
          return this._createNewProp(this._object, newField, value);
     }
@@ -359,7 +366,6 @@ class JSONValidatorInterpreter {
             logicConditions.push(this._validateAndGetConditions(validation[condition]))
         }
 
-		logicConditions.forEach(logicCondition => console.log(logicCondition))
         return logicConditions.reduce((acumulator, logicCondition) => Number(acumulator) + Number(logicCondition[0]), 0)
     }
 
@@ -410,6 +416,9 @@ class JSONValidatorInterpreter {
      */
 
     _verifyIfItExistsInsideObject(validation) {
+
+		if(this._object[validation.field] == '')
+			return;
         if(!this._object[validation.field])
             throw new Error(`${validation.field} does not exist in ${this._object}`)
     }

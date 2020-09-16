@@ -7,7 +7,8 @@ class InterpreterTranslator {
     }
 
     _validResult(conditions) {
-        
+
+
         if(typeof conditions !== 'object')
             throw new Error('I just translate arrays')
         
@@ -33,14 +34,12 @@ class InterpreterTranslator {
             })
         })
         
-        console.log('All right!')
         return conditions;
     }
 
     getTranslatedResult() {
         
         let resultTranslated = []
-
         this._result.forEach(result => {
             
             let conditionObject = {
