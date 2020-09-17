@@ -93,7 +93,7 @@ Com isso, iremos começar com uma validação básica:
     },
 </pre>
 
-Essa validação está comparando o nome do objeto person com o valor de target. Caso seja verdadeiro, ela retornará true e, caso seja false, ela retornará true.
+Essa validação está comparando o nome do objeto person com o valor de target. Caso seja verdadeiro, ela retornará true e, caso seja false, ela retornará false.
 
 Contudo, muitas vezes, você deseja acessar o tamanho dessa string com a propriedade .length, por exemplo. Por isso, você pode acessar propriedades de campos determinados no "field" através da seguinte maneira:
 
