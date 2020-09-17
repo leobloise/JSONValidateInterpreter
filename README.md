@@ -208,3 +208,53 @@ Esse bloco de condição acima resume a primeira forma, te permite encadear infi
 
 Entretanto, uma limitação desse modo é que você não pode controlar o tipo de relacionamento entre cada uma das condições.
 
+## Condições prioritárias
+
+Antes de mostrar o próximo exemplo, seria legal você ter uma noção sobre ordem de prescedência nas operações matemáticas e como a programação lida com isso.
+
+O próximo exemplo irá mostrar como podemos fazer uma condição prioritária, que é um bloco de condição que está dentro de outro bloco de condição, mas deve ser executado antes da condição mais externa. Para termos um exemplo cotidiano, utilizaremos essa condição:
+
+<pre>
+    if((age == 20 && name.length > 20) && name == 'Leonardo' ) {
+
+    }
+</pre>
+
+Para representarmos essa estrutura dentro do nosso JSON, faremos o seguinte:
+
+<pre>
+    "personValidation_parenteses_true": {
+        "validations": [
+            {
+                "field": "name",
+                "operator": "equal",
+                "target": "Leonardo Cardoso da Silva Bloise",
+                "validation": {
+                    "operator": "and",
+                    "validations":[
+                        {
+                            "operator": "and",
+                            "condition1":{
+                                
+                                    "field": "age",
+                                    "operator": "equal",  
+                                    "target": "20"
+                            }, 
+
+                            "condition2": {
+                                "field": "name",
+                                "property": "length",
+                                "operator": "bigger",  
+                                "target": "20"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+</pre>
+
+O objeto "validation" dentro de uma validação especifíca a necessidade de uma validação ser realizada primeiro. Com isso, o interpretador procura pela relação desse bloco de validação interior com o bloco exterior. Partindo, desse modo, para as validações que serão realizadas primeiro.
+
+TOME MUITO CUIDADO com esse recurso. Na prática, ele utiliza recursividade. Com isso, você pode acabar caindo em um grande conjunto de validações se não tomar cuidado na hora de utilizá-las.
