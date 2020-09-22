@@ -256,5 +256,19 @@
                 ]
             }
         ]
-    }
+    },
+     "personValidation_customFunctions_true_length": {
+        "validations":[
+            {
+                "field": "methods",
+                "property": [
+                    "cpfPlusAge",
+                    "length"
+                ],
+                "operator": "equal",
+                "type": "Number",
+                "target": "16"
+            }
+        ]
+     }
 }

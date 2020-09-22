@@ -7,22 +7,36 @@ class JSONValidatorInterpreter {
         this._object = targetObject;
         this._json = validateJson
         this._allObjectValidations = this._getValidations();
+        /**
+         * @summary Garantir que todo erro tenha o nome do objeto.
+         */
         this._object.__proto__.toString = function() {
             return this.constructor.name;
         }
-
+        /**
+         * 
+         * @param {*} conditions
+         * @summary Medida de segurança para utilizar o tradutor. 
+         */
         this._translator = (conditions) => {
-            
             let realTranslator = new InterpreterTranslator(conditions)
             return realTranslator.getTranslatedResult();
         }
 
     }
 
+    /**
+     * @summary Esse método deve ser o único método que você deverá chamar para criar todas as validações.
+     */
     createAllConditions() {
         const allConditionsSolved = this._allObjectValidations.map(validations => this._createConditions(validations))
         return allConditionsSolved;
     }
+
+    /**
+     * @param none;
+     * @summary Esse método recupera todos os objetos de validação.
+     */
 
     _getValidations() {
 
@@ -35,6 +49,11 @@ class JSONValidatorInterpreter {
 
         return validations;
     }
+
+     /**
+     * @param {*} validations 
+     * @summary Esse método contem toda a lógica para criar um array de validações. Além disso, ela é recursiva.
+     */
 
     _createConditions(validations) {
 
@@ -113,6 +132,12 @@ class JSONValidatorInterpreter {
 
     }
 
+    /**
+     * @param {*} validation 
+     * @summary Esse método contem toda a lógica para a aplicação de uma validação comum.
+     * Além disso, é necessário a utilização de um CommonValidations.
+     */
+
     _applyCommonValidations(validation) {
 
 		let object = this._object[validation.field];
@@ -130,7 +155,10 @@ class JSONValidatorInterpreter {
         return commonValidation[validation.func]();
     
     }
-
+     /**
+     * @param {*} validation 
+     * @summary Esse método contem toda a lógica para a aplicação de uma propriedade em um campo.
+     */
     _applyProperty(validation) {
 
         console.log('Validação Passando aqui', validation)
@@ -149,6 +177,10 @@ class JSONValidatorInterpreter {
 
     } 
 
+    /**
+     * @param {*} validation 
+     * @summary Esse método contem toda a lógica para a criação de um campo em tempo de execução.
+     */
     _createNewFieldValidationLogic(validation) {
 
         if(validation.validationsNeed) {
@@ -305,8 +337,8 @@ class JSONValidatorInterpreter {
             target = this._verifyAndReturnProperlyField(target, prop)
         })
 
-        console.log(target)
         return target;
+
     }
 
     _verifyAndReturnProperlyTarget(target) {
