@@ -1,0 +1,33 @@
+{
+  "name": "jsonvalidateinterpreter_typescript",
+  "version": "2.0.0",
+  "description": "Validador de JSON feito em TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node-dev --transpile-only  index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leobloise/JSONValidateInterpreter.git"
+  },
+  "keywords": [
+    "validador",
+    "json",
+    "typescript"
+  ],
+  "author": "Leonardo C. S. Bloise",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leobloise/JSONValidateInterpreter/issues"
+  },
+  "homepage": "https://github.com/leobloise/JSONValidateInterpreter#readme",
+  "devDependencies": {
+    "ts-node-dev": "^1.0.0-pre.63",
+    "typescript": "^4.0.3",
+    "@types/node": "^14.11.2"
+  },
+  "dependencies": {
+    
+  }
+}
