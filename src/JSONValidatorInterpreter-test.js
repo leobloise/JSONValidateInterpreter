@@ -261,7 +261,7 @@ class JSONValidatorInterpreter {
         
         let field = (typeof validation.property == "object")?this._applyProperty(validation):this._object[`${validation.field}`];
 
-        let target = (typeof validation.type == 'string')?this._transformToSpecifcyType(this._verifyAndReturnProperlyTarget(validation.target), validation.type):this._verifyAndReturnProperlyTarget(validation.target)
+        let target = this._applyProperlyTarget(validation)
 		
 		if(typeof field == 'function') {
 			field = field();
@@ -286,11 +286,16 @@ class JSONValidatorInterpreter {
     }
 
     _applyProperlyTarget(validation) {
-
-        if(typeof validation.property_target != "string")
-            return this._verifyAndReturnProperlyTarget(validation.target)
+        
+        console.log(validation)
 
         let target = this._verifyAndReturnProperlyTarget(validation.target)
+
+        if(typeof validation.property_target != "object")
+            return target
+        
+        if(typeof validation.type == "string")
+            target = this._transformToSpecifcyType(target, validation.type)
 
         validation.property_target.forEach(prop => {
             
@@ -300,6 +305,7 @@ class JSONValidatorInterpreter {
             target = this._verifyAndReturnProperlyField(target, prop)
         })
 
+        console.log(target)
         return target;
     }
 

@@ -8,6 +8,9 @@ class Person {
         this.address = address
         this.job = job
         this.study = study
+        this.teste = {
+            properieadeTeste: 32
+        }
 
         this.methods = {
             cpfPlusAge: () => {

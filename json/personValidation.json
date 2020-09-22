@@ -241,5 +241,20 @@
                 "field": "name"
             }
         ]
+    },
+    "personValidation_testePropriedade": {
+        "validations":[
+            {
+                "field": "name",
+                "property": [
+                    "length"
+                ],
+                "operator":"equal",
+                "target": "prop: teste",
+                "property_target": [
+                    "properieadeTeste"
+                ]
+            }
+        ]
     }
 }
