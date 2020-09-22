@@ -11,8 +11,15 @@ class Validacoes {
 		let interpreter = new JSONValidatorInterpreter(this._object, this._json);
 		let results = interpreter.createAllConditions()
 		
+		console.log('RESULTADO CRU SEM TRADUÇÃO ======================> ', results)
+		
 		let translator = new InterpreterTranslator(results);
+		let translated = translator.getTranslatedResult();
 
-        return translator.getTranslatedResult();
+		console.log('RESULTADO COM TRADUÇÃO ====================>', translated)
+
+        return translated;
     }
 }
+
+export default Validacoes;

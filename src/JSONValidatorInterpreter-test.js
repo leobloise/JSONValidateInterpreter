@@ -37,6 +37,7 @@ class JSONValidatorInterpreter {
     }
 
     _createConditions(validations) {
+
         let  conditions = {
             conditionsSolved: []
 		}
@@ -106,7 +107,8 @@ class JSONValidatorInterpreter {
                 conditions.conditionsSolved.push(validation.res)
             }
 
-        })
+        });
+
         return conditions.conditionsSolved
 
     }
@@ -114,11 +116,10 @@ class JSONValidatorInterpreter {
     _applyCommonValidations(validation) {
 
 		let object = this._object[validation.field];
-		
-
+       
 		if(validation.property) {
-			object = object[validation.property]
-		}
+			object = this._applyProperty(validation)
+        }
         
         let commonValidation = new CommonValidations(object)
 
@@ -127,7 +128,26 @@ class JSONValidatorInterpreter {
         }
 
         return commonValidation[validation.func]();
+    
     }
+
+    _applyProperty(validation) {
+
+        console.log('Validação Passando aqui', validation)
+
+        let object = this._object[validation.field]
+
+        validation.property.forEach(prop => {
+            console.log('Property =>', prop)
+           object = this._verifyAndReturnProperlyField(object, prop)
+
+        })
+
+        console.log(object)
+
+        return object
+
+    } 
 
     _createNewFieldValidationLogic(validation) {
 
@@ -228,6 +248,7 @@ class JSONValidatorInterpreter {
      */
 
     _validateAndGetConditions(validation) {
+
 		let conditions = []
 		
 		if(validation.func) {
@@ -238,7 +259,7 @@ class JSONValidatorInterpreter {
 
         this._verifyIfItExistsInsideObject(validation);
         
-        let field = (typeof validation.property == 'string')?this._verifyAndReturnProperlyField(this._object[`${validation.field}`], validation.property):this._object[`${validation.field}`];
+        let field = (typeof validation.property == "object")?this._applyProperty(validation):this._object[`${validation.field}`];
 
         let target = (typeof validation.type == 'string')?this._transformToSpecifcyType(this._verifyAndReturnProperlyTarget(validation.target), validation.type):this._verifyAndReturnProperlyTarget(validation.target)
 		
@@ -253,6 +274,7 @@ class JSONValidatorInterpreter {
     }
 
     _verifyAndReturnProperlyField(field, property){
+    
         if(!field.hasOwnProperty(property) || typeof field[property] === 'undefined') 
             return undefined;
 
@@ -260,8 +282,26 @@ class JSONValidatorInterpreter {
             return field[property]
 
         return field[property]();
+    
     }
 
+    _applyProperlyTarget(validation) {
+
+        if(typeof validation.property_target != "string")
+            return this._verifyAndReturnProperlyTarget(validation.target)
+
+        let target = this._verifyAndReturnProperlyTarget(validation.target)
+
+        validation.property_target.forEach(prop => {
+            
+            if(typeof target[prop] == 'undefined')
+                throw new Error('Essa propriedade não existe')
+            
+            target = this._verifyAndReturnProperlyField(target, prop)
+        })
+
+        return target;
+    }
 
     _verifyAndReturnProperlyTarget(target) {
 
@@ -276,6 +316,7 @@ class JSONValidatorInterpreter {
         }
 
         return target;
+    
     }
 
     _transformToSpecifcyType(target, type) {
@@ -300,11 +341,13 @@ class JSONValidatorInterpreter {
      */
 
     _getCorrectMathOperationFromOperationLogic(validation) {
+    
         if(validation.operator == 'or') {
             return '+'
         } 
 
         return '*'
+    
     }
 
      /**
@@ -343,6 +386,7 @@ class JSONValidatorInterpreter {
         }
 
         return quantityValidations
+    
     }
 
     /**
@@ -353,8 +397,7 @@ class JSONValidatorInterpreter {
      */
 
     _logicOrConditions(validation) {
-
-		
+	
         let quantityValidations = this._verifyIfQuantityIsCorrectAndGetIt(validation);
 
         let logicConditions = []
@@ -367,6 +410,7 @@ class JSONValidatorInterpreter {
         }
 
         return logicConditions.reduce((acumulator, logicCondition) => Number(acumulator) + Number(logicCondition[0]), 0)
+
     }
 
     /**
@@ -388,6 +432,7 @@ class JSONValidatorInterpreter {
         }
 
         return logicConditions.reduce((acumulator, logicCondition) => acumulator * Number(logicCondition), 1)
+
     }
 
     /**
@@ -424,4 +469,4 @@ class JSONValidatorInterpreter {
     }
 }
 
-exports.JSONValidatorInterpreter = JSONValidatorInterpreter;
+module.exports = {JSONValidatorInterpreter};

@@ -35,6 +35,10 @@ class CommonValidations {
             empty = true;
         return empty;
 	}
+
+	isNotEmpty() {
+		return !this.isEmpty();
+	}
 	
 	isZero() {
 		let valueTreatedToBeValidate = this._value;
@@ -50,13 +54,19 @@ class CommonValidations {
 		}
 	}
 
-	isNotNumeric() {
+	isNumeric() {
+
 		let valueTreatedToBeValidate = this._value;
 		if(typeof valueTreatedToBeValidate!= "string" )
 			valueTreatedToBeValidate = String(valueTreatedToBeValidate);
 		
 		var num = /^[0-9]+$/;
-		return !(num.test(valueTreatedToBeValidate));
+		return (num.test(valueTreatedToBeValidate));
+	
+	}
+
+	isNotNumeric() {
+		return !(this.isNumeric());	
 	}
 
     get originalValue() {
@@ -65,5 +75,4 @@ class CommonValidations {
 
 }
 
-
-exports.CommonValidations = CommonValidations
+module.exports = {CommonValidations};

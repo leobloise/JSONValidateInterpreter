@@ -72,4 +72,4 @@ class InterpreterTranslator {
 
 }
 
-exports.InterpreterTranslator = InterpreterTranslator
+module.exports = {InterpreterTranslator};
