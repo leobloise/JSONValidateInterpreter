@@ -305,6 +305,14 @@ class JSONValidatorInterpreter {
 
     }
 
+     /**
+     * @method _verifyAndReturnProperlyField
+     * @param {*} validation
+     * @param {*} property
+     * @summary Esse método aplica de maneira apropriada uma propriedade em um campo.
+     */
+
+
     _verifyAndReturnProperlyField(field, property){
     
         if(!field.hasOwnProperty(property) || typeof field[property] === 'undefined') 
@@ -316,6 +324,13 @@ class JSONValidatorInterpreter {
         return field[property]();
     
     }
+
+    
+     /**
+     * @method _applyProperlyTarget
+     * @param {*} validation
+     * @summary Esse método aplica de maneira apropriada uma propriedade em um target.
+     */
 
     _applyProperlyTarget(validation) {
         
