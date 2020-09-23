@@ -1,6 +1,7 @@
 {
   "name": "jsonvalidateinterpreter_typescript",
   "version": "2.0.0",
+  "type": "module",
   "description": "Validador de JSON feito em TypeScript",
   "main": "index.js",
   "scripts": {

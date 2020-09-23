@@ -1,16 +1,16 @@
-import { type } from "os";
 import applyFuncValidation from "../interfaces/applyFuncValidation";
 import commonValidation from "../interfaces/commonValidation";
 import logicValidation from "../interfaces/logicValidation";
-import setValidation from "../interfaces/setValidation";
 import validation_general from "../interfaces/validation_general";
+import Evalueter from "./Evalueter";
+import Result from "./Result";
 
 class JSONInterpreter {
 
     private _object: any;
     private _json: any;
 
-    constructor(object: any, json: object) {
+    constructor(object: any, json: any) {
 
         this._object = object;
         this._json = json
@@ -33,34 +33,176 @@ class JSONInterpreter {
 
     }
 
+    public teste() {
+        
+        let conditions = this.getAllConditionsFromJson();
+
+        let result: Array<any> = []
+        
+        conditions.forEach(condition => result.push(this.createCondition(condition)))
+
+        return new Result(result).result;
+    }   
+
+    private getAllConditionsFromJson() {
+        
+        let allConditions = []
+
+        for(let validation in this._json) {
+
+            allConditions.push(this._json[validation])
+
+        }
+
+        return allConditions;
+
+    }
+
     /**
      * @method createCondition
      * @param validations 
      * @summary Method that execute all conditions and get the result
      */
 
-    private createCondition(validations: validation_general ) {
+    protected createCondition(validations: validation_general ): Array<Array<boolean | string>> {
+
+        let conditionsSolved: any = {
+            conditions: []
+        }
         
-        let conditionsSolved = []
-
         validations.validations.forEach(validation => { 
+            console.log(validation)
+            
+            if(validation.operator == "or" || validation.operator == "and") {
 
-            let response = this.calcAndGetConditionResult(validation as commonValidation)
-            conditionsSolved.push(response);
+                console.log("VALIDACAO QUE ENTROU AQUI", validation)
+                let response = this.calc(validation as logicValidation)
+                conditionsSolved['conditions'].push(response);
+                return;
+
+            }
+
+            let response = this.checkResAndRelationShip(this.calcAndGetConditionResult(validation as commonValidation), validation as commonValidation | applyFuncValidation | logicValidation);
+            conditionsSolved['conditions'].push(response);
+
         })
 
+        return conditionsSolved;
     }
     
+    private calc(validation: logicValidation) {
+        
+        if(validation.operator == "or") {
+            
+            let result = this.logicOrConditions(validation)
+            let readyForReturn = this.checkResAndRelationShip(result, validation)
+            
+            return readyForReturn;
+        }
+
+    }
+
+    
+    private logicOrConditions(validation: any) {
+	
+        let quantityValidations = this.verifyIfQuantityIsCorrectAndGetIt(validation);
+
+        let logicConditions = []
+
+        for(let i = 1; i <= quantityValidations; i++) {
+
+            let condition: string = 'condition'+String(i);
+           
+            console.log([validation[condition]])
+
+            logicConditions.push(this.createCondition(
+                {
+                    validations: [validation[condition]]
+                } as validation_general))
+        }
+
+        let allValues = new Evalueter(new Result(logicConditions).result).evaluete;
+
+        return [Boolean(allValues.reduce((acumulator: number, value) => {
+            return acumulator += Number(value[0])
+        }, 0))];
+    }
+
+    private verifyIfQuantityIsCorrectAndGetIt(validation: logicValidation) {
+        
+        let quantityValidations = this.getQtdConditions(validation)
+
+        if(quantityValidations < 2) {
+            throw new SyntaxError('This operation is not valid')
+        }
+
+        return quantityValidations
+    
+    }
+
+    private getQtdConditions(validation: logicValidation) {
+
+        let quantityValidations = 0;
+
+        for(let condition in validation) {
+            if(condition.includes('condition')) {
+                quantityValidations++;
+            }
+        }
+
+        return quantityValidations;
+    }
+
+    /**
+     * @method checkResAndRelationShip
+     * @param response 
+     * @param validation 
+     * @summary It will check if there are any relationship and\or res. Then, it will treat them properly.
+     */
+
+    private checkResAndRelationShip(response: Array<boolean|string>, validation: commonValidation | applyFuncValidation | logicValidation): Array<string | boolean> {
+        
+        let relationship: string | undefined = validation.relationship;
+
+        if(typeof relationship !== 'undefined')
+            response.push(this.getRelationship(relationship));
+
+
+        let res = this.checkIfResExist(validation as commonValidation | logicValidation)
+        
+        if(res.length > 0) 
+            response.push(res);
+
+        return response
+        
+    }
+
+    private getRelationship(relationship: string): string {
+
+        switch(relationship) {
+            case "and":
+                return '*'
+            case "or":
+                return '+'
+            default:
+                throw new Error('This relationship does not exist');
+        }
+
+    }
+
     /**
      * @method calcAndGetConditionResult
      * @param validation 
      * @summary This method will return the result of condition 
      */
 
-    private calcAndGetConditionResult(validation: commonValidation) {
+    private calcAndGetConditionResult(validation: commonValidation): Array<boolean> {
         
         let field = this.filterField(validation);
         let target = this.filterTarget(validation);
+        
+        console.log('CAMPO', field)
+        console.log('ALVO', target)
 
         return [this.getConditionResult(field, validation.operator, target)]
     }
@@ -70,7 +212,7 @@ class JSONInterpreter {
      * @param validation 
      * @summary This method check if any res was defined and, if it's defined, it'll be returned.
      */
-    private checkIfResExist(validation: commonValidation | logicValidation) {
+    private checkIfResExist(validation: commonValidation | logicValidation): string {
 
         if(!validation.res) {
              return '';
@@ -85,7 +227,7 @@ class JSONInterpreter {
      * @summary This method will correct the field and get it from object.
      */
 
-    private filterTarget(validation: commonValidation) {
+    private filterTarget(validation: commonValidation): string {
         
         let target = this.checkIfPropOrNot(validation.target)
       
@@ -114,7 +256,7 @@ class JSONInterpreter {
      * @summary Check if there is a prop to use and get.
      */
 
-    private checkIfPropOrNot(target: string) {
+    private checkIfPropOrNot(target: string): any {
        
         if(!target.includes('prop: ')) 
             return target
@@ -131,7 +273,7 @@ class JSONInterpreter {
      * @summary Transform some string to another type.
      */
 
-    private transformTo(srt: string, type: string) {
+    private transformTo(srt: string, type: string): string | boolean | number {
         
         switch(type) {
             case 'Number':
@@ -157,7 +299,9 @@ class JSONInterpreter {
      * @param validation 
      * @summary This method will correct the field and get it from object.
      */
-    private filterField(validation: commonValidation | applyFuncValidation) {
+    private filterField(validation: commonValidation | applyFuncValidation): any {
+
+        console.log('AQUI O', validation)
 
         if(!validation.field.includes('prop:')) 
             return this.applyProperlyProps(this._object[validation.field], validation.property)
@@ -174,7 +318,7 @@ class JSONInterpreter {
      * @param prop 
      * @summary This method will check and get the properly field using properties or not.
      */
-    private applyProperlyProps(field: any, prop?: Array<string>) {
+    private applyProperlyProps(field: any, prop?: Array<string>): any {
 
         if(!prop) 
             return this.getField(field)
@@ -198,7 +342,7 @@ class JSONInterpreter {
      * @param field 
      * @summary This method will get a pure field.
      */    
-    private getField(field: any) {
+    private getField(field: any): any {
 
         if(typeof field !== 'function')
             return field;
@@ -213,7 +357,7 @@ class JSONInterpreter {
      * @param {any} target
      * @summary This method will get the result from any logic operation defined by a field, operator and target.
      */
-    private getConditionResult(field: any, operator: string, target: any) {
+    private getConditionResult(field: any, operator: string, target: any): boolean {
 
         switch(operator) {
             case 'bigger':
@@ -239,3 +383,5 @@ class JSONInterpreter {
     }
 
 }
+
+export default JSONInterpreter;

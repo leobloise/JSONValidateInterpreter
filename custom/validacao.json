@@ -1,0 +1,57 @@
+{
+    "validacaoTeste": {
+        "validations": [
+            {
+                "relationship": "and",
+                "field": "name",
+                "property": [
+                    "length"
+                ],
+                "operator": "smaller",
+                "target": "20"
+            },
+            {
+                "field": "age",
+                "operator": "equal",
+                "target": "20",
+                "res": "res: Mensage"
+            }
+            
+        ]
+    },
+    "validacaoTeste2": {
+        "validations": [
+            {
+                "field": "age",
+                "operator": "equal",
+                "target": "20",
+                "res": "res: Mensage"
+            }
+        ]
+    },
+    "validacaoTeste3": {
+        "validations": [
+            {
+                "operator": "or",
+                "condition1": {
+                    "field": "age",
+                    "operator": "equal",
+                    "target": "1"
+                },
+                "condition2": {
+                    "field": "age",
+                    "operator": "equal",
+                    "target": "1"
+                },
+                "condition3": {
+                    "field": "age",
+                    "operator": "equal",
+                    "target": "1"
+                },
+                "res": "res: Mensage"
+                
+            }
+        ]
+    }
+
+}

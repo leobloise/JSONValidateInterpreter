@@ -4,7 +4,7 @@ import logicValidation from "./logicValidation";
 import setValidation from "./setValidation";
 
 interface validation_general {
-    validations: Array< commonValidation | applyFuncValidation | logicValidation | setValidation >
+    validations: Array< commonValidation | applyFuncValidation | logicValidation | setValidation | any >
 }
 
 export default validation_general;
