@@ -3,7 +3,8 @@ interface applyFuncValidation {
     func: string,
     field: string,
     property?: Array<string>,
-    res?: string
+    res?: string,
+    validation?: Array<object>
 
 }
 

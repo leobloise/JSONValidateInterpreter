@@ -1,29 +1,44 @@
-import { type } from "os";
 import applyFuncValidation from "../interfaces/applyFuncValidation";
 import commonValidation from "../interfaces/commonValidation";
 import logicValidation from "../interfaces/logicValidation";
 import validationPriority from "../interfaces/validationPriority";
 import validation_general from "../interfaces/validation_general";
+import CommonValidations from "./CommonValidations";
 import Evalueter from "./Evalueter";
 import Result from "./Result";
+
+interface runtimeErrorObject {
+    error: Array<string>
+}
+
 
 class JSONInterpreter {
 
     private _object: any;
     private _json: any;
+    private commonValidations: Function;
+    private runtimeError: runtimeErrorObject = {
+        error: []
+    }
 
     constructor(object: any, json: any) {
 
         this._object = object;
+
         this._json = json
-        // this._allObjectValidations = this._getValidations();
-        // /**
-        //  * @summary Garantir que todo erro tenha o nome do objeto.
-        //  */
-        // // this._translator = (conditions) => {
-        // //     let realTranslator = new InterpreterTranslator(conditions)
-        // //     return realTranslator.getTranslatedResult();
-        // // }
+
+        this.commonValidations = (field: any, operation: string) => {
+            
+            let realCommonValidations: any = new CommonValidations(field);
+            
+            if(typeof realCommonValidations[operation] !== 'function'){
+               this.runtimeError.error.push(`This operation ${operation} does not exist in CommonValidations`);
+                return '';
+            }
+    
+            return realCommonValidations[operation]();
+        }
+
 
     }
 
@@ -35,7 +50,9 @@ class JSONInterpreter {
         
         conditions.forEach(condition => result.push(this.createCondition(condition)))
 
-        return new Result(result).result;
+        return {
+            result: new Result(result).result,
+            errors: this.runtimeError.error};
     }   
 
     private getAllConditionsFromJson() {
@@ -65,13 +82,21 @@ class JSONInterpreter {
         }
     
         validations.validations.forEach(validation => { 
- 
+
             if(validation.validation) {
 
                 let results = this.doPriorityValidation(validation.validation as validationPriority)  
                 conditionsSolved['conditions'].push(results);
 
             } 
+
+            if(validation.func) {
+
+                let response = this.applyCommonValidations(validation as applyFuncValidation);
+                conditionsSolved['conditions'].push(response)
+                return;
+
+            }
 
             if(validation.operator == "or" || validation.operator == "and") {
 
@@ -87,6 +112,21 @@ class JSONInterpreter {
         })
 
         return conditionsSolved;
+    }
+
+    private applyCommonValidations(validation: applyFuncValidation) {
+        
+		let object = this._object[validation.field];
+       
+		if(validation.property) 
+		    object = this.applyProperlyProps(object, validation.property)
+            
+        let result = [this.commonValidations(object, validation.func)]
+        
+        result = this.checkResAndRelationShip(result, validation);
+
+        return result;
+    
     }
 
     private doPriorityValidation(validation: validationPriority) {
@@ -185,7 +225,8 @@ class JSONInterpreter {
         let quantityValidations = this.getQtdConditions(validation)
 
         if(quantityValidations < 2) {
-            throw new SyntaxError('This operation is not valid')
+            this.runtimeError.error.push(`There are not enough conditionals to do this validation: ${validation}`)
+            return quantityValidations;
         }
 
         return quantityValidations
@@ -237,8 +278,9 @@ class JSONInterpreter {
             case "or":
                 return '+'
             default:
-                throw new Error('This relationship does not exist');
-        }
+                this.runtimeError.error.push(`This ${relationship} does not exist. So, relationship or will be used`);
+                return '+';
+        }   
 
     }
 
@@ -294,6 +336,7 @@ class JSONInterpreter {
         }
 
         return target;
+
     }
 
     /**
@@ -335,7 +378,8 @@ class JSONInterpreter {
             case 'String':
                 return String(srt)
             default:
-                throw new Error('This type does not exist or not coded')
+                this.runtimeError.error.push(`This ${type} does not exist or not coded. So, String will be used`)
+                return String(srt);
         }
 
     }
@@ -370,8 +414,11 @@ class JSONInterpreter {
         
         prop.forEach(eachProp => {
 
-            if(typeof field[eachProp] == "undefined")
-                throw new Error('You are trying to access some property that does not exist inside this object')
+            if(typeof field[eachProp] == "undefined") {
+                this.runtimeError.error.push(`Property ${eachProp} does not exist in ${field}. So, empty string will be given as result`)
+                return '';
+            }
+                
             
             if(typeof field[eachProp] == "function") {
                 field = field[eachProp]();
@@ -426,7 +473,8 @@ class JSONInterpreter {
             case 'strictdiff':
                 return field !== target;
             default:
-                throw new SyntaxError(`This operator does not exist or not coded: talk with Leo2 or read the documentation`)
+                this.runtimeError.error.push(`This ${operator} does not exist or not coded: talk with Leo2 or read the documentation. So, false will be returned`)
+                return false;
         }
 
     }

@@ -90,5 +90,18 @@
                 }
             }
         ]
+    },
+    "validacaoTeste5": {
+        "validations": [
+            {
+                "relationship": "and",
+                "field": "name",
+                "property": [
+                    "length"
+                ],
+                "func": "isNumeric",
+                "res": "res: Mensage"
+            }
+        ]
     }
 }
