@@ -13,7 +13,7 @@ class Result implements response {
     }
 
     get result() {
-
+        
         let filteredResult: Array<Array<boolean | string>> = this.conditions.map(res => res.conditions.reduce((acumulator: Array<boolean>, condtion: any) => acumulator.concat(condtion), []))
 
         return filteredResult;

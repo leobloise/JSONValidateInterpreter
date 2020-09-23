@@ -19,7 +19,7 @@ class Evalueter {
             
             }, '')
             
-            return [eval(stringToEvaluete)]
+            return [Boolean(eval(stringToEvaluete))]
         })
 
     }

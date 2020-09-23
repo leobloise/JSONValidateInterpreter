@@ -32,26 +32,63 @@
     "validacaoTeste3": {
         "validations": [
             {
-                "operator": "or",
+                "operator": "and",
                 "condition1": {
                     "field": "age",
                     "operator": "equal",
-                    "target": "1"
+                    "target": "20"
                 },
                 "condition2": {
                     "field": "age",
                     "operator": "equal",
-                    "target": "1"
+                    "target": "20"
                 },
                 "condition3": {
-                    "field": "age",
+                    "field": "name",
+                    "property": [
+                        "length"
+                    ],
                     "operator": "equal",
-                    "target": "1"
+                    "target": "8"
                 },
                 "res": "res: Mensage"
                 
             }
         ]
-    }
+    },
 
+    "validacaoTeste4": {
+        "validations": [
+            {
+                "field": "age",
+                "operator": "equal",
+                "target": "20",
+                "validation": {
+                    "operator": "and",
+                    "validations": [
+                        {
+                            "relationship": "and",
+                            "field": "age", 
+                            "operator": "equal",
+                            "target": "20"
+                        },
+                        {
+                             "relationship": "and",
+                            "field": "age", 
+                            "operator": "equal",
+                            "target": "20"
+                        },
+                        {
+                            "field": "name",
+                            "property": [
+                                "length"
+                            ],
+                            "operator": "equal",
+                            "target": "8"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
 }

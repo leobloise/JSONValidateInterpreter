@@ -1,6 +1,8 @@
+import { type } from "os";
 import applyFuncValidation from "../interfaces/applyFuncValidation";
 import commonValidation from "../interfaces/commonValidation";
 import logicValidation from "../interfaces/logicValidation";
+import validationPriority from "../interfaces/validationPriority";
 import validation_general from "../interfaces/validation_general";
 import Evalueter from "./Evalueter";
 import Result from "./Result";
@@ -18,14 +20,6 @@ class JSONInterpreter {
         // /**
         //  * @summary Garantir que todo erro tenha o nome do objeto.
         //  */
-        this._object.__proto__.toString = function() {
-            return this.constructor.name;
-        }
-        /**
-        //  * 
-        //  * @param {*} conditions
-        // //  * @summary Medida de segurança para utilizar o tradutor. 
-        // //  */
         // // this._translator = (conditions) => {
         // //     let realTranslator = new InterpreterTranslator(conditions)
         // //     return realTranslator.getTranslatedResult();
@@ -69,13 +63,18 @@ class JSONInterpreter {
         let conditionsSolved: any = {
             conditions: []
         }
-        
+    
         validations.validations.forEach(validation => { 
-            console.log(validation)
-            
+ 
+            if(validation.validation) {
+
+                let results = this.doPriorityValidation(validation.validation as validationPriority)  
+                conditionsSolved['conditions'].push(results);
+
+            } 
+
             if(validation.operator == "or" || validation.operator == "and") {
 
-                console.log("VALIDACAO QUE ENTROU AQUI", validation)
                 let response = this.calc(validation as logicValidation)
                 conditionsSolved['conditions'].push(response);
                 return;
@@ -89,22 +88,49 @@ class JSONInterpreter {
 
         return conditionsSolved;
     }
+
+    private doPriorityValidation(validation: validationPriority) {
+        
+        let results = [this.createCondition({
+            validations: validation.validations 
+        } as validation_general)]
+
+        let realResult: Array<boolean | string> = this.calcAndTranslateResultFromConditions(results)[0]
+
+        let relationship = validation.operator;
+
+        realResult.push(this.getRelationship(relationship))
+
+        return realResult;
+
+    }
     
     private calc(validation: logicValidation) {
         
-        if(validation.operator == "or") {
+        if(validation.operator == 'and') {
+
+            let result = this.logicAndConditions(validation)
+            let readyForReturn = this.checkResAndRelationShip(result, validation)
+            
+            return readyForReturn;
+        
+        }
             
             let result = this.logicOrConditions(validation)
             let readyForReturn = this.checkResAndRelationShip(result, validation)
             
             return readyForReturn;
-        }
 
     }
 
+    private calcAndTranslateResultFromConditions(conditions:  Array<object>) {
+
+        return new Evalueter(new Result(conditions).result).evaluete;
     
-    private logicOrConditions(validation: any) {
-	
+    }
+
+    private conditionGeneralLogic(validation: any) {
+
         let quantityValidations = this.verifyIfQuantityIsCorrectAndGetIt(validation);
 
         let logicConditions = []
@@ -113,15 +139,41 @@ class JSONInterpreter {
 
             let condition: string = 'condition'+String(i);
            
-            console.log([validation[condition]])
-
             logicConditions.push(this.createCondition(
                 {
                     validations: [validation[condition]]
                 } as validation_general))
         }
 
-        let allValues = new Evalueter(new Result(logicConditions).result).evaluete;
+        return this.calcAndTranslateResultFromConditions(logicConditions)
+
+    }
+
+    /**
+     * @method logicAndConditions
+     * @param validation 
+     * @summary It will calculate and get conditions using OR validation.
+     */
+
+    private logicAndConditions(validation: any) {
+
+        let allValues = this.conditionGeneralLogic(validation)
+        
+        return [Boolean(allValues.reduce((acumulator: number, value) => {
+            return acumulator *= Number(value[0])
+        }, 1))];
+
+    }
+
+    /**
+     * @method logicOrConditions
+     * @param validation 
+     * @summary It will calculate and get conditions using OR validation.
+     */
+    
+    private logicOrConditions(validation: any) {
+	
+        let allValues = this.conditionGeneralLogic(validation)
 
         return [Boolean(allValues.reduce((acumulator: number, value) => {
             return acumulator += Number(value[0])
@@ -200,9 +252,6 @@ class JSONInterpreter {
         
         let field = this.filterField(validation);
         let target = this.filterTarget(validation);
-        
-        console.log('CAMPO', field)
-        console.log('ALVO', target)
 
         return [this.getConditionResult(field, validation.operator, target)]
     }
@@ -237,10 +286,7 @@ class JSONInterpreter {
         if(validation.property_target) {
 
             validation.property_target.forEach(prop => {
-            
-                if(typeof target[prop] == 'undefined')
-                    throw new Error('Essa propriedade não existe')
-                
+        
                 target = this.applyProperlyProps(target, [prop]);
 
             })
@@ -301,8 +347,6 @@ class JSONInterpreter {
      */
     private filterField(validation: commonValidation | applyFuncValidation): any {
 
-        console.log('AQUI O', validation)
-
         if(!validation.field.includes('prop:')) 
             return this.applyProperlyProps(this._object[validation.field], validation.property)
 
@@ -328,9 +372,14 @@ class JSONInterpreter {
 
             if(typeof field[eachProp] == "undefined")
                 throw new Error('You are trying to access some property that does not exist inside this object')
-        
-            field = field[eachProp];
+            
+            if(typeof field[eachProp] == "function") {
+                field = field[eachProp]();
+                return;
+            }
 
+            field = field[eachProp];
+            return;
         })
        
         return field;
