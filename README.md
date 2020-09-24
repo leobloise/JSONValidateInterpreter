@@ -205,3 +205,40 @@ Os tipos de relacionamento são esses:
 <br>
 <strong><i>NOTA</i>: A última validação não deve ter um relacionamento.</strong>
 <br>
+
+## Segunda forma de implementar os relacionamentos
+
+Essa segunda forma de implementação permite um resultado mais rápido, porém te limita na hora de escolher o relacionamento entre as condições. 
+
+Essa segunda forma te permite estabelecer um mesmo relacionamento para um conjunto de condições. Para fazer isso, usaremos o seguinte formato:
+
+<pre>
+{
+    "operator": "relacionamento",
+    "condition1:" {
+        "field": "nomedocampo",
+        "property": [
+            "propriedade",
+            "propriedade"
+        ],
+        "operator": "operador",
+        "target": "alvo"
+    },
+    "condition2:" {
+        "field": "nomedocampo",
+        "property": [
+            "propriedade",
+            "propriedade"
+        ],
+        "operator": "operador",
+        "target": "alvo"
+    }
+
+}
+</pre>
+
+O relacionamento se aplica da mesma forma, porém você não pode controlar o relacionamento entre cada uma das condições.
+
+<br>
+<strong><i>NOTA</i>: Adicionar a propriedade relationship irá causar um erro.</strong>
+<br>
