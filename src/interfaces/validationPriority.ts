@@ -6,7 +6,7 @@ import setValidation from './setValidation';
 interface validationPriority {
 
     operator: string,
-    validations: Array< commonValidation | logicValidation | setValidation | applyFuncValidation>
+    validations: Array< commonValidation | logicValidation | setValidation | applyFuncValidation >
 
 }
 

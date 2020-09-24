@@ -1,108 +1,28 @@
 {
-    "validacaoTeste": {
-        "validations": [
-            {
-                "relationship": "and",
-                "field": "name",
-                "property": [
-                    "name",
-                    "length"
-                ],
-                "operator": "smaller",
-                "target": "20"
-            },
-            {
-                "field": "age",
-                "operator": "equal",
-                "target": "20",
-                "res": "res: Mensage"
-            }
-            
-        ]
-    },
     "validacaoTeste2": {
         "validations": [
             {
-                "field": "age",
-                "operator": "equal",
-                "target": "20",
-                "res": "res: Mensage"
-            }
-        ]
-    },
-    "validacaoTeste3": {
-        "validations": [
-            {
-                "operator": "and",
-                "condition1": {
-                    "field": "age",
-                    "operator": "equal",
-                    "target": "20"
-                },
-                "condition2": {
-                    "field": "age",
-                    "operator": "equal",
-                    "target": "20"
-                },
-                "condition3": {
-                    "field": "name",
-                    "property": [
-                        "name",
-                        "length"
-                    ],
-                    "operator": "equal",
-                    "target": "8"
-                },
-                "res": "res: Mensage"
-            }
-        ]
-    },
-
-    "validacaoTeste4": {
-        "validations": [
-            {
-                "field": "age",
-                "operator": "equal",
-                "target": "20",
-                "validation": {
-                    "operator": "and",
-                    "validations": [
-                        {
-                            "relationship": "and",
-                            "field": "age", 
-                            "operator": "equal",
-                            "target": "20"
-                        },
-                        {
-                             "relationship": "and",
-                            "field": "age", 
-                            "operator": "equal",
-                            "target": "20"
-                        },
-                        {
-                            "field": "name",
-                            "operator": "equal",
-                            "property": [
-                                "name",
-                                "length"
-                            ],
-                            "target": "8"
-                        }
-                    ]
-                }
-            }
-        ]
-    },
-    "validacaoTeste5": {
-        "validations": [
-            {
-                "field": "name",
-                "property": [
-                    "name",
-                    "length"
-                ],
-                "func": "isNumeric",
-                "res": "res: Mensage"
+              "field": "name",
+              "operator": "equal",
+              "property": [
+                  "name",
+                  "length"
+              ],
+              "target": "8",
+              "validation": {
+                  "operator": "or",
+                  "validations": [
+                      {
+                        "field": "name",
+                        "operator": "equal",
+                        "property": [
+                            "name",
+                            "length"
+                        ],
+                        "target": "8"
+                      }
+                  ]
+              }
             }
         ]
     }

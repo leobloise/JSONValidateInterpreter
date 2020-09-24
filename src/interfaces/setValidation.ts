@@ -9,5 +9,4 @@ interface setValidation {
 
 }
 
-
 export default setValidation;
