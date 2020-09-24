@@ -18,7 +18,7 @@ class Evalueter {
                 return acumulator; 
             
             }, '')
-            
+
             return [Boolean(eval(stringToEvaluete))]
         })
 

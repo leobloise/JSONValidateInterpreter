@@ -9,16 +9,18 @@ json = JSON.parse(json);
 
 class Pessoa {
 
-    public name: string
+    public name: object
     public age: number
 
-    constructor(name: string, age: number) {
+    constructor(name: object, age: number) {
         this.name = name
         this.age = age
     }
 
 }
 
-let interpreter = new JSONInterpreter(new Pessoa('Leonardo', 20), json)
+let interpreter = new JSONInterpreter(new Pessoa({
+    name: 'Leonardo'
+}, 20), json)
 
 console.log(interpreter.teste());

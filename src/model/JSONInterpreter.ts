@@ -1,3 +1,4 @@
+import { Console } from "console";
 import applyFuncValidation from "../interfaces/applyFuncValidation";
 import commonValidation from "../interfaces/commonValidation";
 import logicValidation from "../interfaces/logicValidation";
@@ -46,22 +47,27 @@ class JSONInterpreter {
         
         let conditions = this.getAllConditionsFromJson();
 
-        let result: Array<any> = []
+        let result: any = {}
         
-        conditions.forEach(condition => result.push(this.createCondition(condition)))
+        for(let validation in conditions ) {
 
+            result[validation] = this.createCondition(conditions[validation]);
+        
+        }
+    
         return {
-            result: new Result(result).result,
-            errors: this.runtimeError.error};
+            result:result,
+            errors: this.runtimeError.error
+        };
     }   
 
     private getAllConditionsFromJson() {
         
-        let allConditions = []
+        let allConditions: any = {}
 
         for(let validation in this._json) {
 
-            allConditions.push(this._json[validation])
+            allConditions[validation] = (this._json[validation])
 
         }
 
@@ -163,7 +169,7 @@ class JSONInterpreter {
 
     }
 
-    private calcAndTranslateResultFromConditions(conditions:  Array<object>) {
+    private calcAndTranslateResultFromConditions(conditions:  Array<object>): Array<Array<boolean|string>> {
 
         return new Evalueter(new Result(conditions).result).evaluete;
     
@@ -411,9 +417,7 @@ class JSONInterpreter {
         if(!prop) 
             return this.getField(field)
 
-        
         prop.forEach(eachProp => {
-
             if(typeof field[eachProp] == "undefined") {
                 this.runtimeError.error.push(`Property ${eachProp} does not exist in ${field}. So, empty string will be given as result`)
                 return '';
@@ -428,7 +432,7 @@ class JSONInterpreter {
             field = field[eachProp];
             return;
         })
-       
+
         return field;
     }
 

@@ -5,6 +5,7 @@
                 "relationship": "and",
                 "field": "name",
                 "property": [
+                    "name",
                     "length"
                 ],
                 "operator": "smaller",
@@ -46,13 +47,13 @@
                 "condition3": {
                     "field": "name",
                     "property": [
+                        "name",
                         "length"
                     ],
                     "operator": "equal",
                     "target": "8"
                 },
                 "res": "res: Mensage"
-                
             }
         ]
     },
@@ -80,10 +81,11 @@
                         },
                         {
                             "field": "name",
+                            "operator": "equal",
                             "property": [
+                                "name",
                                 "length"
                             ],
-                            "operator": "equal",
                             "target": "8"
                         }
                     ]
@@ -94,9 +96,9 @@
     "validacaoTeste5": {
         "validations": [
             {
-                "relationship": "and",
                 "field": "name",
                 "property": [
+                    "name",
                     "length"
                 ],
                 "func": "isNumeric",
