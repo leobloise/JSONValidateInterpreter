@@ -3,11 +3,12 @@
         "validations": [
             {
               "field": "name",
-              "operator": "equal",
+              "operator": "strictequal",
               "property": [
                   "name",
                   "length"
               ],
+              "type": "Number",
               "target": "8",
               "validation": {
                   "operator": "or",

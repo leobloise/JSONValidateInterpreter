@@ -23,7 +23,7 @@ let interpreter = new JSONInterpreter(new Pessoa({
     name: 'Leonardo'
 }, 20), json)
 
-let resultado: any = interpreter.teste()
+let resultado: any = interpreter.conditions;
 
 for(let result in resultado) {
     console.log(resultado[result])

@@ -79,7 +79,6 @@ class Validator {
                 return '';
             }
                 
-            
             if(typeof field[eachProp] == "function") {
                 field = field[eachProp]();
                 return;
@@ -125,6 +124,12 @@ class Validator {
 
             let target = this.checkIfPropOrNot(validation.target)
           
+            if(!validation.type && validation.operator.includes('strict')) {
+                this.runtimeError.error.push(`Strict comparison must be done using types`)
+                return '';
+            } 
+            
+
             if(validation.type) 
                 target = this.transformTo(target, validation.type)
             

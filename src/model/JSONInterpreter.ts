@@ -33,7 +33,7 @@ class JSONInterpreter {
 
     }
 
-    public teste() {
+    get conditions() {
         
         let conditions = this.getAllConditionsFromJson();
 
