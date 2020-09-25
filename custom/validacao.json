@@ -2,28 +2,13 @@
     "validacaoTeste2": {
         "validations": [
             {
-              "field": "name",
-              "operator": "strictequal",
-              "property": [
-                  "name",
-                  "length"
-              ],
-              "type": "Number",
-              "target": "8",
-              "validation": {
-                  "operator": "or",
-                  "validations": [
-                      {
-                        "field": "name",
-                        "operator": "equal",
-                        "property": [
-                            "name",
-                            "length"
-                        ],
-                        "target": "8"
-                      }
-                  ]
-              }
+                "loops": "num: 2",
+                "field": "cpf",
+                "property_item": [
+                    "length"
+                ],
+                "operator": "equal",
+                "target": "8"
             }
         ]
     }

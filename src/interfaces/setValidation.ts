@@ -1,4 +1,4 @@
-import validationPriority from './validationPriority'
+import validationPriority from './validations/secundary/validationPriority'
 
 interface setValidation {
 

@@ -1,4 +1,4 @@
-import validationPriority from "./validationPriority";
+import validationPriority from "../secundary/validationPriority";
 
 interface applyFuncValidation {
 
@@ -6,7 +6,6 @@ interface applyFuncValidation {
     func: string,
     field: string,
     property?: Array<string>,
-    res?: string,
     validation?: validationPriority
 
 }

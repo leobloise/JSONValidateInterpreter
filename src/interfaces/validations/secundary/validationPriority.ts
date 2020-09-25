@@ -1,7 +1,7 @@
-import applyFuncValidation from './applyFuncValidation';
-import commonValidation from './commonValidation'
+import applyFuncValidation from '../primary/applyFuncValidation';
+import commonValidation from '../primary/commonValidation'
 import logicValidation from './logicValidation'
-import setValidation from './setValidation';
+import setValidation from '../../setValidation';
 
 interface validationPriority {
 

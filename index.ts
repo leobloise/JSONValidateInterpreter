@@ -11,17 +11,20 @@ class Pessoa {
 
     public name: object
     public age: number
+    public cpf: Array<string>
 
-    constructor(name: object, age: number) {
+    constructor(name: object, age: number, cpf: Array<string>) {
         this.name = name
         this.age = age
+        this.cpf = cpf;
     }
 
 }
 
 let interpreter = new JSONInterpreter(new Pessoa({
     name: 'Leonardo'
-}, 20), json)
+}, 20,
+['123456789', '12345678']), json)
 
 let resultado: any = interpreter.conditions;
 

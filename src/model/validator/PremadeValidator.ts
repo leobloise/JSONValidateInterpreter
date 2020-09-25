@@ -1,10 +1,10 @@
-import applyFuncValidation from "../interfaces/applyFuncValidation";
+import applyFuncValidation from "../interfaces/validations/primary/applyFuncValidation";
 import Validator from "./Validator";
 
 import ValidationClass from '../interfaces/Validation'
 import resultFromValidator from "../interfaces/resultFromValidator";
 
-class PremadeValidator extends Validator implements ValidationClass{
+class PremadeValidator extends Validator implements ValidationClass {
     
     constructor(objectValidation: applyFuncValidation, object: any){
         super(objectValidation, object)

@@ -1,4 +1,4 @@
-import commonValidation from "../interfaces/commonValidation";
+import commonValidation from "../interfaces/validations/primary/commonValidation";
 import resultFromValidator from "../interfaces/resultFromValidator";
 import ValidationClass from "../interfaces/Validation";
 import Validator from "./Validator";
@@ -9,7 +9,7 @@ class CommonValidator extends Validator implements ValidationClass{
         super(objectValidation, object)
     }
 
-    get result() {
+    get result(): resultFromValidator {
         
         let validation = this.objectValidation as commonValidation
         

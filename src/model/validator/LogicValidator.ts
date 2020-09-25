@@ -1,5 +1,5 @@
 import Evalueter from "../helper/Evalueter";
-import logicValidation from "../interfaces/logicValidation";
+import logicValidation from "../interfaces/validations/secundary/logicValidation";
 import resultFromValidator from "../interfaces/resultFromValidator";
 import ValidationClass from "../interfaces/Validation";
 import validation_general from "../interfaces/validation_general";
@@ -12,7 +12,7 @@ class LogicValidator extends Validator implements ValidationClass {
         super(objectValidation, object);
     }
 
-    get result() {
+    get result(): resultFromValidator {
 
         let validation = this.objectValidation as logicValidation;
         
@@ -44,7 +44,7 @@ class LogicValidator extends Validator implements ValidationClass {
             return {
                 result: [false],
                 errors: this.runtimeError.error
-            } as resultFromValidator;
+            };
         }
 
         return validationObject[validation.operator]();

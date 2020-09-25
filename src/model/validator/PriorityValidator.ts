@@ -1,8 +1,8 @@
 import { Console } from "console";
-import applyFuncValidation from "../interfaces/applyFuncValidation";
+import applyFuncValidation from "../interfaces/validations/primary/applyFuncValidation";
 import resultFromValidator from "../interfaces/resultFromValidator";
 import ValidationClass from "../interfaces/Validation";
-import validationPriority from "../interfaces/validationPriority";
+import validationPriority from "../interfaces/validations/secundary/validationPriority";
 import validation_general from "../interfaces/validation_general";
 import JSONInterpreter from "./JSONInterpreter";
 import Validator from "./Validator";

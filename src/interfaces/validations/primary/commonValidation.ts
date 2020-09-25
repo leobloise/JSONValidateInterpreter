@@ -1,4 +1,4 @@
-import validationPriority from './validationPriority'
+import validationPriority from '../secundary/validationPriority'
 
 interface commonValidation {
     
@@ -8,7 +8,6 @@ interface commonValidation {
     operator: string,
     type?: string,
     target: string,
-    res?: string,
     property_target?: Array<string>
     validation?: validationPriority
 

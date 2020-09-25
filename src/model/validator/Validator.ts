@@ -1,16 +1,17 @@
-import Evalueter from "../helper/Evalueter";
-import Result from "../helper/Result";
-import applyFuncValidation from "../interfaces/applyFuncValidation";
-import commonValidation from "../interfaces/commonValidation";
-import logicValidation from "../interfaces/logicValidation";
-import runtimeErrorObject from "../interfaces/runtimeErrorObject";
-import setValidation from "../interfaces/setValidation";
-import validationPriority from "../interfaces/validationPriority";
-import CommonValidations from "./CommonValidations";
+import Evalueter from "../../helper/Evalueter";
+import Result from "../../helper/Result";
+import applyFuncValidation from "../../interfaces/validations/primary/applyFuncValidation";
+import arrayValidation from "../../interfaces/validations/primary/arrayValidation";
+import commonValidation from "../../interfaces/validations/primary/commonValidation";
+import logicValidation from "../../interfaces/validations/secundary/logicValidation";
+import runtimeErrorObject from "../../interfaces/runtimeErrorObject";
+import setValidation from "../../interfaces/setValidation";
+import validationPriority from "../../interfaces/validations/secundary/validationPriority";
+import CommonValidations from "../../helper/CommonValidations";
 
 class Validator {
     
-    protected objectValidation: commonValidation | applyFuncValidation | logicValidation | setValidation | validationPriority;
+    protected objectValidation: commonValidation | arrayValidation | applyFuncValidation | logicValidation | setValidation | validationPriority;
     protected runtimeError: runtimeErrorObject
     protected object: any;
     protected resultFunc: Function = (result: Array<Array<Array<boolean|string>>>) => {
@@ -42,6 +43,13 @@ class Validator {
     
     }
 
+    /**
+     * @method checkRelationship
+     * @param response 
+     * @param validation 
+     * @summary This method will check if there are any relationship between two validations. If it's true, then 
+     * the math operation equivalent to this relationship will be added to response.
+     */
     protected checkRelationship(response: Array<boolean|string>, validation: commonValidation | applyFuncValidation | logicValidation): Array<string | boolean> {
         
         let relationship: string | undefined = validation.relationship;
@@ -52,6 +60,12 @@ class Validator {
         return response
         
     }
+
+    /**
+     * @method getRelationship
+     * @param {strng} relationship 
+     * @summary This method will translate the relationship given.
+     */
 
     protected getRelationship(relationship: string): string {
 
@@ -66,6 +80,15 @@ class Validator {
         }   
 
     }
+
+    /**
+     * @method applyProperlyProps
+     * @param field 
+     * @param prop 
+     * @summary This method will get an array of propertys and, first of all, check if it was really given. If it's false,
+     * it will return only the field, but, if it's true, it will go through this entire array and check if the property
+     * is valid, if it's, it'll apply it correctly. If it's not, it will give you a runtimeError.
+     */
 
     protected applyProperlyProps(field: any, prop?: Array<string>): any {
 
@@ -92,6 +115,12 @@ class Validator {
         return field;
     }
 
+    /**
+     * @method getField
+     * @param field 
+     * @summary It'll only get the field correctly and not apply any property.
+     */
+
     protected getField(field: any): any {
 
         if(typeof field !== 'function')
@@ -100,20 +129,34 @@ class Validator {
         return field();
     }
 
+    /**
+     * @method filterField
+     * @param validation 
+     * @summary It will check if the field is valid andm then, return it with all properties applied 
+     */
+
     protected filterField(validation: commonValidation | applyFuncValidation): any {
 
         if(typeof validation.field !== "string") {
-            this.runtimeError.error.push(`Field ${validation.field} is not valid or does not exist in ${this.object}. So, empty string will be given as result`)
+            this.runtimeError.error.push(`Field in ${validation} is not valid or does not exist in ${this.object}. So, empty string will be given as result`)
             return '';
         }
 
         if(typeof this.object[validation.field] == "undefined") {
-            this.runtimeError.error.push(`Field ${validation.field} is not valid or does not exist in ${this.object}. So, empty string will be given as result`)
+            this.runtimeError.error.push(`Field in ${validation} is not valid or does not exist in ${this.object}. So, empty string will be given as result`)
             return '';
         }
+        
         return this.applyProperlyProps(this.object[validation.field], validation.property);
 
     }
+
+    
+    /**
+     * @method filterTarget
+     * @param validation 
+     * @summary It will check if the target is valid andm then, return it with all properties applied 
+     */
 
     protected filterTarget(validation: commonValidation): string {
 
@@ -129,7 +172,6 @@ class Validator {
                 return '';
             } 
             
-
             if(validation.type) 
                 target = this.transformTo(target, validation.type)
             
@@ -173,13 +215,19 @@ class Validator {
 
     }
 
+    /**
+     * @method checkIfPropOrNot
+     * @param target 
+     * @summary It will check if there are any "prop" inside the target and return it properly.
+     */
+
     protected checkIfPropOrNot(target: string): any {
        
-        if(!target.includes('prop: ')) 
+        if(!target.includes('prop:')) 
             return target
 
         let prop = target.split('prop:')[1].trim();
-        return ((typeof this.object[prop] !== 'undefined')?this.object[prop]:'This property does not exist')
+        return this.applyProperlyProps(this.object, [prop])
 
     }
 
