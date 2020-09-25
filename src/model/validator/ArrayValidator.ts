@@ -1,7 +1,7 @@
-import arrayValidation from "../interfaces/validations/primary/arrayValidation";
-import commonValidation from "../interfaces/validations/primary/commonValidation";
-import resultFromValidator from "../interfaces/resultFromValidator";
-import ValidationClass from "../interfaces/Validation";
+import arrayValidation from "../../interfaces/validations/primary/arrayValidation";
+import commonValidation from "../../interfaces/validations/primary/commonValidation";
+import resultFromValidator from "../../interfaces/resultFromValidator";
+import ValidationClass from "../../interfaces/Validation";
 import Validator from "./Validator";
 
 interface loops {
