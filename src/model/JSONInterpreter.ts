@@ -1,9 +1,9 @@
-import applyFuncValidation from "../interfaces/validations/primary/applyFuncValidation";
-import commonValidation from "../interfaces/validations/primary/commonValidation";
-import logicValidation from "../interfaces/validations/secundary/logicValidation";
+import FuncValidation from "../interfaces/validations/primary/FuncValidation";
+import StandardValidation from "../interfaces/validations/primary/StandardValidation";
+import LogicValidation from "../interfaces/validations/secundary/logicValidation";
 import runtimeErrorObject from "../interfaces/runtimeErrorObject";
 import validationPriority from "../interfaces/validations/secundary/validationPriority";
-import validation_general from "../interfaces/validation_general";
+import ObjectValidations from "../interfaces/ObjectValidations";
 import Result from "../helper/Result";
 import CommonValidator from "./validator/CommonValidator";
 import LogicValidator from "./validator/LogicValidator";
@@ -12,16 +12,17 @@ import PriorityValidator from "./validator/PriorityValidator";
 import resultFromValidator from "../interfaces/resultFromValidator";
 import Validator from "./validator/Validator";
 import ArrayValidator from "./validator/ArrayValidator";
-import arrayValidation from "../interfaces/validations/primary/arrayValidation";
+import ArrayValidation from "../interfaces/validations/primary/arrayValidation";
+import ObjectJson from "../interfaces/ObjectJson";
 
 interface allValidations {
-    [index: string]: validation_general
+    [index: string]: ObjectValidations
 }
 
 class JSONInterpreter {
 
     private _object: any;
-    private _json: any;
+    private _json: ObjectJson;
     private runtimeError: runtimeErrorObject = {
         error: []
     }
@@ -37,7 +38,7 @@ class JSONInterpreter {
 
         this._object = object;
 
-        this._json = json
+        this._json = json as ObjectJson;
 
     }
 
@@ -61,10 +62,10 @@ class JSONInterpreter {
     private getAllConditionsFromJson() {
         
         let allConditions: allValidations = {}
-
+        console.log(this._json)
         for(let validation in this._json) {
 
-            allConditions[validation] = (this._json[validation]) as validation_general
+            allConditions[validation] = (this._json[validation]) as ObjectValidations
         
         }
 

@@ -1,17 +1,9 @@
-import validationPriority from "../secundary/validationPriority";
+import StandardValidation from "./StandardValidation";
 
-interface arrayValidation {
+interface ArrayValidation extends StandardValidation {
     
-    loops: number | string,
-    field: string,
-    operator: string,
-    target: string,
-    property_item?: Array<string>,
-    property_target?: Array<string>,
-    type?: string,
-    validation?: validationPriority,
-    relationship?: string
+    loops: number | string
 
 }
 
-export default arrayValidation
+export default ArrayValidation

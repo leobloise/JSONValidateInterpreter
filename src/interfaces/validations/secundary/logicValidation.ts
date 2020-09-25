@@ -1,17 +1,10 @@
-import applyFuncValidation from '../primary/applyFuncValidation';
-import commonValidation from '../primary/commonValidation';
-import setValidation from '../../setValidation';
-import validationPriority from './validationPriority'
-import arrayValidation from '../primary/arrayValidation';
+import ComplexCondition from '../ComplexCondition';
+import Condition from '../../../model/validations/Condition';
 
-interface logicValidation {
+interface LogicCondition_interface extends ComplexCondition {
     
-    relationship?: string,
-    operator: string,
-    condition1: commonValidation | logicValidation | setValidation | applyFuncValidation | arrayValidation,
-    condition2: commonValidation | logicValidation | setValidation | applyFuncValidation | arrayValidation,
-    validation?: validationPriority,
+    conditions: Array < Condition >
 
 }
 
-export default logicValidation;
+export default LogicCondition_interface;

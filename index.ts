@@ -1,5 +1,5 @@
 import JSONInterpreter from "./src/model/JSONInterpreter"
-
+import JsonObjectFactory from './src/model/factory/JsonObjectFactory'
 import fs from 'fs';
 import path from 'path'
 
@@ -21,13 +21,15 @@ class Pessoa {
 
 }
 
-let interpreter = new JSONInterpreter(new Pessoa({
-    name: 'Leonardo'
-}, 20,
-['123456789', '12345678']), json)
+console.log(new JsonObjectFactory(json).teste)  
 
-let resultado: any = interpreter.conditions;
+// let interpreter = new JSONInterpreter(new Pessoa({
+//     name: 'Leonardo'
+// }, 20,
+// ['123456789', '12345678']), json)
 
-for(let result in resultado) {
-    console.log(resultado[result])
-}
+// let resultado: any = interpreter.conditions;
+
+// for(let result in resultado) {
+//     console.log(resultado[result])
+// }

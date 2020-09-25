@@ -1,13 +1,14 @@
-import applyFuncValidation from '../primary/applyFuncValidation';
-import commonValidation from '../primary/commonValidation'
-import logicValidation from './logicValidation'
-import setValidation from '../../setValidation';
+import ComplexCondition from '../ComplexCondition';
+import LogicValidation from './LogicValidation'
+import StandardValidation from '../primary/StandardValidation';
+import FuncValidation from '../primary/FuncValidation';
+import ArrayValidation from '../primary/ArrayValidation';
+import Condition from '../../../model/validations/Condition';
 
-interface validationPriority {
+interface ValidationPriority extends ComplexCondition{
 
-    operator: string,
-    validations: Array< commonValidation | logicValidation | setValidation | applyFuncValidation >
+    validations: Array< Condition >
 
 }
 
-export default validationPriority;
+export default ValidationPriority;

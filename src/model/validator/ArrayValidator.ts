@@ -1,5 +1,5 @@
-import arrayValidation from "../../interfaces/validations/primary/arrayValidation";
-import commonValidation from "../../interfaces/validations/primary/commonValidation";
+import arrayValidation from "../../interfaces/validations/primary/ArrayValidation";
+import commonValidation from "../../interfaces/validations/primary/StandardValidation";
 import resultFromValidator from "../../interfaces/resultFromValidator";
 import ValidationClass from "../../interfaces/Validation";
 import Validator from "./Validator";
