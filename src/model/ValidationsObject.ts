@@ -1,16 +1,43 @@
 import ObjectValidations from "../interfaces/ObjectValidations";
-import ArrayValidation from "../interfaces/validations/primary/ArrayValidation";
-import FuncValidation from "../interfaces/validations/primary/FuncValidation";
-import StandardValidation from "../interfaces/validations/primary/StandardValidation";
-import LogicCondition from "../interfaces/validations/secundary/LogicValidation";
+import ComplexCondition from "./validations/ComplexCondition";
+import Condition from "./validations/Condition";
+import getValidationObjectUsingContext from './ContextStruct';
 
 class ValidationsObject implements ObjectValidations {
 
-    public validations: Array< StandardValidation | FuncValidation | ArrayValidation | LogicCondition>
+    public validations: Array< Condition | ComplexCondition >
 
-    constructor(validations: Array< StandardValidation | FuncValidation | ArrayValidation | LogicCondition>) {
-        this.validations = validations;
+
+    constructor(validations: Array< Condition | ComplexCondition >) {
+        this.validations = this.transformAllValidationsToObject(validations)
     }
+
+    private transformAllValidationsToObject(validations: Array< Condition | ComplexCondition > ): Array< Condition | ComplexCondition >  {
+
+        
+        let tempArray: Array< Condition | ComplexCondition > = []
+        
+        for(let prop in validations) {
+            
+            let validation = validations[prop];
+            let kind = validation.kind;
+            
+            let validationObject = getValidationObjectUsingContext(kind, validation)
+    
+            tempArray.push(validationObject)
+
+        }
+
+        return tempArray;
+
+    } 
+
+    get validationsTransformed() {
+
+        return this.validations;
+
+    }
+
 
 }
 

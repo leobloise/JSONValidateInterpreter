@@ -3,7 +3,7 @@ import Condition from '../../../model/validations/Condition';
 
 interface LogicCondition_interface extends ComplexCondition {
     
-    conditions: Array < Condition >
+    conditions: Array< Condition | ComplexCondition > 
 
 }
 

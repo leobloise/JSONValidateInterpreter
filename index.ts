@@ -2,6 +2,8 @@ import JSONInterpreter from "./src/model/JSONInterpreter"
 import JsonObjectFactory from './src/model/factory/JsonObjectFactory'
 import fs from 'fs';
 import path from 'path'
+import ValidationsObject from "./src/model/ValidationsObject";
+import ValidatorMachine from "./src/model/ValidatorMachine";
 
 let json = String(fs.readFileSync(path.resolve(path.resolve(), 'custom', 'validacao.json')))
 
@@ -21,12 +23,14 @@ class Pessoa {
 
 }
 
-console.log(new JsonObjectFactory(json).teste)  
+let allJsonToObject = new JsonObjectFactory(json).jsonObjects;
 
-// let interpreter = new JSONInterpreter(new Pessoa({
-//     name: 'Leonardo'
-// }, 20,
-// ['123456789', '12345678']), json)
+let allConditionsToObject = allJsonToObject.objectValidationsFromJson;
+
+let validatorMachine = new ValidatorMachine(new Pessoa({
+    name: 'Leonardo'
+}, 20,
+['123456789', '12345678']), allConditionsToObject)
 
 // let resultado: any = interpreter.conditions;
 

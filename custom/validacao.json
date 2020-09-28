@@ -1,15 +1,115 @@
 {
+    "validacaoTeste1": {
+        "validations": [
+            {
+                "kind": "Priority",
+                "validation": {
+                    "operator": "and",
+                    "validations": [
+                        {
+                            "relationship": "or",
+                            "kind":"Standard",
+                            "field": "name",
+                            "property": [
+                                "name",
+                                "length"
+                            ],
+                            "operator": "equal",
+                            "target": "81"
+                        },
+                        {
+                            "kind":"Standard",
+                            "field": "name",
+                            "property": [
+                                "name",
+                                "length"
+                            ],
+                            "operator": "equal",
+                            "target": "91"
+                        }
+                    ],
+                    "pos_validations": [
+                            {
+                                "kind": "Array",
+                                "loops": "num: 2",
+                                "field": "cpf",
+                                "property": [
+                                    "length"
+                                ],
+                                "operator": "equal",
+                                "target": "8"
+                            }
+                        ]
+                }
+            }
+        ]
+    },
     "validacaoTeste2": {
         "validations": [
             {
+                "kind": "Array",
                 "loops": "num: 2",
                 "field": "cpf",
-                "property_item": [
+                "property": [
+                    "length"
+                ],
+                "operator": "equal",
+                "target": "8"
+            },
+            {
+                "kind":"Standard",
+                "field": "name",
+                "property": [
+                    "name"
+                ],
+                "operator": "equal",
+                "target": "Leonardo"
+            }
+        ]
+    },
+    "validacaoTeste3": {
+        "validations": [
+            {
+                "kind": "Array",
+                "loops": "num: 2",
+                "field": "cpf",
+                "property": [
                     "length"
                 ],
                 "operator": "equal",
                 "target": "8"
             }
         ]
+    },
+
+    "validacaoTeste5": {
+        "validations": [
+            {   
+                "relationship": "or",
+                "kind": "Logic",
+                "operator": "and",
+                "conditions": [
+                    {
+                        "kind":"Standard",
+                        "field": "name",
+                        "property": [
+                            "name"
+                        ],
+                        "operator": "equal",
+                        "target": "Leonardo"
+                    },
+                    {
+                        "kind":"Standard",
+                        "field": "name",
+                        "property": [
+                            "name"
+                        ],
+                        "operator": "equal",
+                        "target": "Leonardo"
+                    }
+                ]
+            }
+        ]
+        
     }
 }

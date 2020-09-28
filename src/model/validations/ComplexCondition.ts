@@ -6,11 +6,25 @@ class ComplexCondition extends Condition implements ComplexCondition_interface {
 
     public operator: string;
 
-    constructor(operator: string, relationship?: string, validation?: ValidationPriority) {
+    constructor(kind: string, operator: string, relationship?: string, validation?: ValidationPriority) {
 
-        super(relationship, validation);
-        this.operator = operator;
+        super(kind, relationship, validation);
+        
+        this.operator = this.checkRelationshipOperator(operator);
 
+    }
+
+    protected checkRelationshipOperator(operator: string) {
+
+        let result = super.checkRelationship(operator);
+    
+        if(!result) {
+
+            this.pushError(`This operator in: ${this.kind} must not be undefined. Or given`)
+            return 'or';
+        }
+
+        return result;
     }
 
 }

@@ -7,12 +7,12 @@ class Validation extends Condition implements Validation_interface {
     public property?: Array<string>
     public field: string
 
-    constructor(field: string
+    constructor(kind: string, field: string
         , property?: Array<string>
         , relationship?: string
         , validation?: ValidationPriority) {
 
-            super(relationship, validation);
+            super(kind, relationship, validation);
             this.field = field;
             this.property = property;
 

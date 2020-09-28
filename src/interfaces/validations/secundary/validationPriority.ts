@@ -8,6 +8,7 @@ import Condition from '../../../model/validations/Condition';
 interface ValidationPriority extends ComplexCondition{
 
     validations: Array< Condition >
+    pos_validations: Array < Condition > 
 
 }
 

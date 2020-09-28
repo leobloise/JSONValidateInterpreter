@@ -1,7 +1,7 @@
 import ObjectValidations from "./ObjectValidations";
 
 interface ObjectJson {
-    objectValidation: Array<ObjectValidations>
+    objectValidations: Array<ObjectValidations>
 }
 
 export default ObjectJson
