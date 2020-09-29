@@ -1,6 +1,6 @@
 import resultFromValidator from "../../interfaces/resultFromValidator";
 import StandardValidation from "../../interfaces/validations/primary/StandardValidation";
-import ValidationPriority from "../../interfaces/validations/secundary/ValidationPriority";
+import ValidationPriority from "../../interfaces/validations/secundary/validationPriority";
 import Validation from "./Validation";
 
 class ValidationStandard extends Validation implements StandardValidation {

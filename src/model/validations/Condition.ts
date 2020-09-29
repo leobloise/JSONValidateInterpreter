@@ -3,7 +3,7 @@ import Result from "../../helper/Result";
 import resultFromValidator from "../../interfaces/resultFromValidator";
 import runtimeErrorObject from "../../interfaces/runtimeErrorObject";
 import Condition_interface from "../../interfaces/validations/Condition";
-import ValidationPriority from "../../interfaces/validations/secundary/ValidationPriority";
+import ValidationPriority from "../../interfaces/validations/secundary/validationPriority";
 import Validation from "./Validation";
 import ValidationStandard from "./ValidationStandard";
 

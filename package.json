@@ -1,6 +1,6 @@
 {
   "_from": "validatejson_leo",
-  "_id": "validatejson_leo@1.0.0",
+  "_id": "validatejson_leo@1.0.1",
   "_inBundle": false,
   "_integrity": "sha512-g7ffkYwDBzsJA/YV20SG8RgDMcaXZp46lT41Bgy+I+NoXSCshkNyMsGUWI5S55mwHJGxaOdQvOjCRY3NoWZEfA==",
   "_location": "/validatejson_leo",
@@ -56,6 +56,6 @@
     "start": "ts-node-dev --transpile-only  index.ts",
     "test": "ts-node-dev --transpile-only test/index.ts"
   },
-  "type": "module",
-  "version": "1.0.0"
+  "type": "commonjs",
+  "version": "1.0.1"
 }

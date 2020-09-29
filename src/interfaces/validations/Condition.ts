@@ -1,5 +1,5 @@
 import resultFromValidator from "../resultFromValidator";
-import ValidationPriority from "./secundary/ValidationPriority";
+import ValidationPriority from "./secundary/validationPriority";
 
 interface resultFunction {
     (structure: any): resultFromValidator;

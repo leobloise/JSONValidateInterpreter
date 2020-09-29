@@ -1,5 +1,5 @@
 import ComplexCondition_interface from '../../interfaces/validations/ComplexCondition'
-import ValidationPriority from '../../interfaces/validations/secundary/ValidationPriority';
+import ValidationPriority from '../../interfaces/validations/secundary/validationPriority';
 import Condition from './Condition';
 
 class ComplexCondition extends Condition implements ComplexCondition_interface {

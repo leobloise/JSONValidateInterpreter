@@ -1,7 +1,7 @@
 import CommonValidations from "../../helper/CommonValidations";
 import resultFromValidator from "../../interfaces/resultFromValidator";
 import FuncValidation from "../../interfaces/validations/primary/FuncValidation";
-import ValidationPriority from "../../interfaces/validations/secundary/ValidationPriority";
+import ValidationPriority from "../../interfaces/validations/secundary/validationPriority";
 import Validation from "./Validation";
 
 class ValidationFunc extends Validation implements FuncValidation {

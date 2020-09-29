@@ -1,4 +1,4 @@
-import ArrayValidation from "../interfaces/validations/primary/ArrayValidation";
+import ArrayValidation from "../interfaces/validations/primary/arrayValidation";
 import FuncValidation from "../interfaces/validations/primary/FuncValidation";
 import StandardValidation from "../interfaces/validations/primary/StandardValidation";
 import ComplexCondition from "./validations/ComplexCondition";

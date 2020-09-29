@@ -1,4 +1,4 @@
-import ValidationPriority from '../../interfaces/validations/secundary/ValidationPriority';
+import ValidationPriority from '../../interfaces/validations/secundary/validationPriority';
 import Validation_interface from '../../interfaces/validations/Validation'
 import Condition from './Condition';
 

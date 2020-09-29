@@ -1,8 +1,8 @@
 import ComplexCondition from '../ComplexCondition';
-import LogicValidation from './LogicValidation'
+import LogicValidation from './logicValidation'
 import StandardValidation from '../primary/StandardValidation';
 import FuncValidation from '../primary/FuncValidation';
-import ArrayValidation from '../primary/ArrayValidation';
+import ArrayValidation from '../primary/arrayValidation';
 import Condition from '../../../model/validations/Condition';
 
 interface ValidationPriority extends ComplexCondition{

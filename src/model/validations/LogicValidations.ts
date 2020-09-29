@@ -1,7 +1,7 @@
 import ComplexCondition from "./ComplexCondition";
-import LogicValidations_interface from '../../interfaces/validations/secundary/LogicValidation'
+import LogicValidations_interface from '../../interfaces/validations/secundary/logicValidation'
 import Condition from "./Condition";
-import ValidationPriority from "../../interfaces/validations/secundary/ValidationPriority";
+import ValidationPriority from "../../interfaces/validations/secundary/validationPriority";
 import resultFromValidator from "../../interfaces/resultFromValidator";
 import ValidationsObject from "../ValidationsObject";
 

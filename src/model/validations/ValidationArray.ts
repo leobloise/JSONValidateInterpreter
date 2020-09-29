@@ -1,6 +1,6 @@
 import resultFromValidator from "../../interfaces/resultFromValidator";
-import ArrayValidation from "../../interfaces/validations/primary/ArrayValidation";
-import ValidationPriority from "../../interfaces/validations/secundary/ValidationPriority";
+import ArrayValidation from "../../interfaces/validations/primary/arrayValidation";
+import ValidationPriority from "../../interfaces/validations/secundary/validationPriority";
 import ValidationStandard from "./ValidationStandard";
 
 interface loops {
