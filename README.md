@@ -2,6 +2,11 @@
 
 Essa biblioteca está sendo reformulada para o typescript. Contudo, o seu intuito permanece o mesmo: realizar validações a partir de um JSON. 
 
+```
+npm install validatejson_leo
+
+```
+
 ## Como funciona
 
 Para ela funcionar, você irá precisar de duas coisas: um objeto a ser validado e um JSON que irá realizar as validações desse objeto. Nesse caso, tanto um objeto literal quanto um objeto construído a partir das classes do ES6 irá funcionar. Contudo, minha recomendação é realizar a construção desse objeto de maneira literal, pois essa estrutura poderá ser mexida diversas vezes durante o percurso de validações.
