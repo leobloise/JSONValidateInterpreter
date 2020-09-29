@@ -1,34 +1,61 @@
 {
-  "name": "jsonvalidateinterpreter_typescript",
-  "version": "2.0.0",
-  "type": "module",
-  "description": "Validador de JSON feito em TypeScript",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node-dev --transpile-only  index.ts"
+  "_from": "validatejson_leo",
+  "_id": "validatejson_leo@1.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-g7ffkYwDBzsJA/YV20SG8RgDMcaXZp46lT41Bgy+I+NoXSCshkNyMsGUWI5S55mwHJGxaOdQvOjCRY3NoWZEfA==",
+  "_location": "/validatejson_leo",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "validatejson_leo",
+    "name": "validatejson_leo",
+    "escapedName": "validatejson_leo",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/leobloise/JSONValidateInterpreter.git"
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/validatejson_leo/-/validatejson_leo-1.0.0.tgz",
+  "_shasum": "72d71a578574b6cd98fe0dc74b7fc445c6ba11e8",
+  "_spec": "validatejson_leo",
+  "_where": "C:\\Users\\Planium\\Desktop\\testeloco",
+  "author": {
+    "name": "Leonardo C. S. Bloise"
   },
+  "bugs": {
+    "url": "https://github.com/leobloise/JSONValidateInterpreter/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "Entregue-me um JSON que irei lhe devolver todas as validações do mesmo aplicada à uma estrutura.",
+  "devDependencies": {
+    "@types/node": "^14.11.2",
+    "ts-node-dev": "^1.0.0-pre.63",
+    "typescript": "^4.0.3"
+  },
+  "homepage": "https://github.com/leobloise/JSONValidateInterpreter#readme",
   "keywords": [
     "validador",
     "json",
     "typescript"
   ],
-  "author": "Leonardo C. S. Bloise",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/leobloise/JSONValidateInterpreter/issues"
+  "main": "index.js",
+  "name": "validatejson_leo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leobloise/JSONValidateInterpreter.git"
   },
-  "homepage": "https://github.com/leobloise/JSONValidateInterpreter#readme",
-  "devDependencies": {
-    "ts-node-dev": "^1.0.0-pre.63",
-    "typescript": "^4.0.3",
-    "@types/node": "^14.11.2"
+  "scripts": {
+    "build": "tsc build ",
+    "start": "ts-node-dev --transpile-only  index.ts",
+    "test": "ts-node-dev --transpile-only test/index.ts"
   },
-  "dependencies": {
-    
-  }
+  "type": "module",
+  "version": "1.0.0"
 }
