@@ -261,7 +261,7 @@ Atualmente, existem alguns tipos de validação:
     <li>Standard</li>
     <li>Array</li>
     <li>Func</li>
-    <li>Priority</li>Logic
+    <li>Priority</li>
     <li>Logic</li>
 </ul>
 
@@ -273,3 +273,9 @@ Algumas, vocês já viram, como a Standard e a Logic. Entretanto, as outras ser�
 => As linhas pretas representam a herança de um elemento pai para seu elemento filho.<br>
 => A imagem deve ser lida da esquerda para direita.<br>
 => A relação entre objectValidations e Condtions é através da propriedade validations, que é um array de conditions.
+
+## Adicionando novas validações
+
+Antes de criar sua validação em si, você deve atualizar essa imagem acima. Com isso, você esclarece qual a relação do seu tipo com os outros tipos e, também, demonstra quais recursos a sua validação precisa para acontecer. Depois disso, você deve criar a interface respectiva a esse tipo de validação utilizando Tyescript. Nessa etapa, você verá outros problemas acontecendo. Esses dizem respeito a lógica da sua validação, que deve ser corrigida. Com isso, altere, caso seja necessário, o esquema da sua validação nessa imagem. Além disso, faça as extensões na sua interface. Por fim, crie uma classe com o nome dessa validação que implemente a interface criada e extenda a classe necessária.
+
+Com isso, você terá que declarar e acertar todas as propriedades e métodos pedidos pela interface. Por fim, você terá uma nova validação completamente funcional respeitando os padrões SOLID.
