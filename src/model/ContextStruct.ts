@@ -1,8 +1,6 @@
-import { throws } from "assert";
 import ArrayValidation from "../interfaces/validations/primary/ArrayValidation";
 import FuncValidation from "../interfaces/validations/primary/FuncValidation";
 import StandardValidation from "../interfaces/validations/primary/StandardValidation";
-import ValidationPriority from "../interfaces/validations/secundary/ValidationPriority";
 import ComplexCondition from "./validations/ComplexCondition";
 import Condition from "./validations/Condition";
 import LogicValidations from "./validations/LogicValidations";

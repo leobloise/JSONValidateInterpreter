@@ -47,6 +47,7 @@
     "validacaoTeste2": {
         "validations": [
             {
+                "relationship": "or",
                 "kind": "Array",
                 "loops": "num: 2",
                 "field": "cpf",
@@ -73,9 +74,6 @@
                 "kind": "Array",
                 "loops": "num: 2",
                 "field": "cpf",
-                "property": [
-                    "length"
-                ],
                 "operator": "equal",
                 "target": "8"
             }
@@ -85,7 +83,6 @@
     "validacaoTeste5": {
         "validations": [
             {   
-                "relationship": "or",
                 "kind": "Logic",
                 "operator": "and",
                 "conditions": [

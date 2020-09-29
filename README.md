@@ -27,13 +27,14 @@ Dito isso, vamos partir para o entendimento da estrutura.
 
 ## Condições como objeto.
 
-Durante toda a estrutura, iremos tratar os "if's" como objetos, onde existem 3 propriedades básicas: field, target e operator. O field representa o campo da esturutra que está sendo validada, o target é o valor que será comparado ao field e, por fim, o operator é o operador que irá regular a comparação executada entre field e target.
+Durante toda a estrutura, iremos tratar os "if's" como objetos, onde existem 3 propriedades básicas: kind, field, target e operator. O field representa o campo da esturutra que está sendo validada, o target é o valor que será comparado ao field e, por fim, o operator é o operador que irá regular a comparação executada entre field e target. Além disso, também foi adicionado a propriedade KIND. Ela indica o tipo de validação que iremos realizar.
 
 <pre>
 {
     "nome_validacao": {
         validations:[
             {
+                "kind": "tipodevalidacao"
                 "field": "nomedocampo",
                 "operator": "operador",
                 "target": "alvo"
@@ -99,6 +100,7 @@ Para acessar as proprieades de um campo determinado pelo field, você deverá ut
     "nome_validacao": {
         validations:[
             {
+                "kind": "tipo"
                 "field": "nomedocampo",
                 "property": [
                     "propriedade",
@@ -127,6 +129,7 @@ Até agora sabemos como fazer validações que utilizam somente um if muito cru 
 "nome_validacao": {
         validations:[
             {
+                "kind": "tipo",
                 "relationship": "relacionamento",
                 "field": "nomedocampo",
                 "property": [
@@ -155,6 +158,7 @@ Perceba que o relationship especifica o relacionamento dele mesmo com o próximo
 "nome_validacao": {
         validations:[
             {
+                "kind": "tipo",
                 "relationship": "relacionamento",
                 "field": "nomedocampo",
                 "property": [
@@ -165,6 +169,7 @@ Perceba que o relationship especifica o relacionamento dele mesmo com o próximo
                 "target": "alvo"
             },
             {
+                "kind": "tipo",
                 "relationship": "relacionamentoDeOutroTipo",
                  "field": "nomedocampo",
                 "property": [
@@ -175,6 +180,7 @@ Perceba que o relationship especifica o relacionamento dele mesmo com o próximo
                 "target": "alvo"
             },
             {
+                "kind": "tipo",
                  "field": "nomedocampo",
                 "property": [
                     "propriedade",
@@ -214,6 +220,7 @@ Essa segunda forma te permite estabelecer um mesmo relacionamento para um conjun
 
 <pre>
 {
+    "kind": "Logic",
     "operator": "relacionamento",
     "condition1:" {
         "field": "nomedocampo",
@@ -241,4 +248,28 @@ O relacionamento se aplica da mesma forma, porém você não pode controlar o re
 
 <br>
 <strong><i>NOTA</i>: Adicionar a propriedade relationship irá causar um erro.</strong>
+<strong><i>OBS</i>: A presença da propriedade KIND é obrigatória.</strong>
 <br>
+
+## Kind
+
+Essa propriedade foi adicionada recentemente com o intuito de facilitar o entendimento dos tipos de validação e, também, a implementação de novas validações. Com isso, ela passa a ser obrigatória em todas as validações. 
+
+Atualmente, existem alguns tipos de validação:
+
+<ul>
+    <li>Standard</li>
+    <li>Array</li>
+    <li>Func</li>
+    <li>Priority</li>Logic
+    <li>Logic</li>
+</ul>
+
+Algumas, vocês já viram, como a Standard e a Logic. Entretanto, as outras serão mais explicadas no decorrer da documentação. Ademais, caso queira um entendimento maior da árvore de herança das condições a partir do JSON, basta ver a imagem abaixo:
+
+<img src="./schema.png">
+
+=> Os campos em verde são propriedades opicionais.<br>
+=> As linhas pretas representam a herança de um elemento pai para seu elemento filho.<br>
+=> A imagem deve ser lida da esquerda para direita.<br>
+=> A relação entre objectValidations e Condtions é através da propriedade validations, que é um array de conditions.
