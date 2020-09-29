@@ -227,7 +227,7 @@ Essa segunda forma te permite estabelecer um mesmo relacionamento para um conjun
 {
     "kind": "Logic",
     "operator": "relacionamento",
-    "condition1:" {
+    "conditions:" [{
         "field": "nomedocampo",
         "property": [
             "propriedade",
@@ -235,8 +235,7 @@ Essa segunda forma te permite estabelecer um mesmo relacionamento para um conjun
         ],
         "operator": "operador",
         "target": "alvo"
-    },
-    "condition2:" {
+    },{
         "field": "nomedocampo",
         "property": [
             "propriedade",
@@ -244,8 +243,7 @@ Essa segunda forma te permite estabelecer um mesmo relacionamento para um conjun
         ],
         "operator": "operador",
         "target": "alvo"
-    }
-
+    }]
 }
 </pre>
 
@@ -255,6 +253,41 @@ O relacionamento se aplica da mesma forma, porém você não pode controlar o re
 <strong><i>NOTA</i>: Adicionar a propriedade relationship irá causar um erro.</strong>
 <strong><i>OBS</i>: A presença da propriedade KIND é obrigatória.</strong>
 <br>
+
+## Validações Pré preparadas.
+
+Esse tipo de validação é feito para suprir a necessidade de validações rotineiras e complexas. Para fazê-la, não iremos precisar de operador, target e property target. Logo, só iremos adicionar a propriedade: func.
+
+<pre>
+"nome_validacao": {
+        validations:[
+            {
+                "kind": "tipo",
+                "relationship": "relacionamento",
+                "field": "nomedocampo",
+                "property": [
+                    "propriedade"
+                ], 
+                "func": "nomeFuncaoPrePronta" 
+            }
+        ]
+    }
+</pre>
+
+O nome das funções são em inglês e no formato de pergunta. Logo, o resultado será true, caso a resposta para a pergunta seja sim, e o resultado será false, caso a resposta para a pergunta seja não. Mesmo que fique um pouco confuso, ao ver os nomes abaixo, você entenderá.
+
+Atualmente, existe um número limitado de validações pré-prontas, pois o intuíto é ir construíndo-as conforme a evolução da biblioteca. Logo, essas são as existentes:
+
+
+<ul>
+    <li> isEmpty </li>
+    <li> isNotEmpty </li>
+    <li> isZero </li>
+    <li> isNumeric </li>
+    <li> isNotNumeric </li>
+</ul>
+
+O intuito dessas validações é serem muito específicas para determinada situação. Logo, faz sentido haver duas validações distintas para verificar, por exemplo, se algo é vazio ou se algo é zero, pois, dependendo da situação, o vazio é aceitável, mas o zero não.
 
 ## Kind
 
@@ -284,3 +317,9 @@ Algumas, vocês já viram, como a Standard e a Logic. Entretanto, as outras ser�
 Antes de criar sua validação em si, você deve atualizar essa imagem acima. Com isso, você esclarece qual a relação do seu tipo com os outros tipos e, também, demonstra quais recursos a sua validação precisa para acontecer. Depois disso, você deve criar a interface respectiva a esse tipo de validação utilizando Tyescript. Nessa etapa, você verá outros problemas acontecendo. Esses dizem respeito a lógica da sua validação, que deve ser corrigida. Com isso, altere, caso seja necessário, o esquema da sua validação nessa imagem. Além disso, faça as extensões na sua interface. Por fim, crie uma classe com o nome dessa validação que implemente a interface criada e extenda a classe necessária.
 
 Com isso, você terá que declarar e acertar todas as propriedades e métodos pedidos pela interface. Por fim, você terá uma nova validação completamente funcional respeitando os padrões SOLID.
+
+## Funcionalidades removidas
+
+<strong> A funcionalidade de retorno de uma resposta foi retirado temporariamente. </strong>
+
+O motivo para tal foi a percepção de que a lógica e toda a engranagem que realiza a validação não deve ser responsável por, também, lidar com a lógica da resposta. Portanto, uma engrenagem separada irá ser montada para lidar com essa funcionalidade.
