@@ -73,7 +73,7 @@ Atualmente, os seguintes operadores estão disponíveis para uso:
     <li>== - equal</li>
     <li>!= - diff</li>
     <li>> - bigger </li>
-    <li>< - smaller> </li>
+    <li>< - smaller</li>
     <li>>= - biggerequal </li>
     <li><= - smallerequal </li>
     <li>=== - strictequal </li>
@@ -316,6 +316,8 @@ Algumas, vocês já viram, como a Standard e a Logic. Entretanto, as outras ser�
 
 Antes de criar sua validação em si, você deve atualizar essa imagem acima. Com isso, você esclarece qual a relação do seu tipo com os outros tipos e, também, demonstra quais recursos a sua validação precisa para acontecer. Depois disso, você deve criar a interface respectiva a esse tipo de validação utilizando Tyescript. Nessa etapa, você verá outros problemas acontecendo. Esses dizem respeito a lógica da sua validação, que deve ser corrigida. Com isso, altere, caso seja necessário, o esquema da sua validação nessa imagem. Além disso, faça as extensões na sua interface. Por fim, crie uma classe com o nome dessa validação que implemente a interface criada e extenda a classe necessária.
 
+Um outro fator que pode ser de granda ajuda é sugerir novas implementações de validações a partir das issues. Com isso, você terá guardado a sua ideia e, caso esqueça, sempre poderá retornar lá para tomar ciência dela novamente.
+
 Com isso, você terá que declarar e acertar todas as propriedades e métodos pedidos pela interface. Por fim, você terá uma nova validação completamente funcional respeitando os padrões SOLID.
 
 ## Funcionalidades removidas
@@ -323,3 +325,4 @@ Com isso, você terá que declarar e acertar todas as propriedades e métodos pe
 <strong> A funcionalidade de retorno de uma resposta foi retirado temporariamente. </strong>
 
 O motivo para tal foi a percepção de que a lógica e toda a engranagem que realiza a validação não deve ser responsável por, também, lidar com a lógica da resposta. Portanto, uma engrenagem separada irá ser montada para lidar com essa funcionalidade.
+
