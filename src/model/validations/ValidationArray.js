@@ -18,7 +18,7 @@ class ValidationArray extends ValidationStandard_1.default {
         let result = 0;
         do {
             let field = arrayFromjson[loops.i];
-            let fieldProper = this.applyProperlyProps(field, props);
+            let fieldProper = (typeof field == 'undefined')?undefined:this.applyProperlyProps(field, props);
             result += Number(this.getConditionResult(fieldProper, this.operator, target));
             loops.i++;
         } while (loops.i < loops.n);

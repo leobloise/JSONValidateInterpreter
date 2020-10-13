@@ -37,12 +37,13 @@ class ValidationArray extends ValidationStandard implements ArrayValidation {
         do {
             let field = arrayFromjson[loops.i]
 
-            let fieldProper = this.applyProperlyProps(field, props)
+            let fieldProper = (typeof field == 'undefined')?undefined:this
+            .applyProperlyProps(field, props);
 
             result += Number(this.getConditionResult(fieldProper, this.operator, target));
 
             loops.i ++;
-
+ 
         } while(loops.i < loops.n)
 
         let treatedResult: Array<boolean | string> = [Boolean(result)]
