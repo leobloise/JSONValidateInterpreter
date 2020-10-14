@@ -135,7 +135,7 @@ class Condition implements Condition_interface {
             return '';
         }
 
-        let target: any = this.checkIfPropOrNot(validation.target);
+        let target: any = this.checkIfPropOrNot(structure, validation.target);
       
         if(!validation.type && validation.operator.includes('strict')) {
             this.pushError(`Strict comparison must be done using types`)
@@ -155,12 +155,15 @@ class Condition implements Condition_interface {
 
     }
 
-    protected checkIfPropOrNot(target: string): string {
+    protected checkIfPropOrNot(structure: any,target: string): string {
        
         if(!target.includes('prop:')) 
             return target
 
-        let prop = target.split('prop:')[1].trim();
+        let arrayFromTarget = target.split('prop:');
+        
+        let prop = arrayFromTarget[1].trim();
+        
         return this.applyProperlyProps(target, [prop])
 
     }

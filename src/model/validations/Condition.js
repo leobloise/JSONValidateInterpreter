@@ -91,7 +91,7 @@ class Condition {
             this.pushError(`Target ${validation.target} is not valid or does not exist. So, empty string will be given as result`);
             return '';
         }
-        let target = this.checkIfPropOrNot(validation.target);
+        let target = this.checkIfPropOrNot(structure, validation.target);
         if (!validation.type && validation.operator.includes('strict')) {
             this.pushError(`Strict comparison must be done using types`);
             return '';
@@ -107,8 +107,9 @@ class Condition {
     checkIfPropOrNot(target) {
         if (!target.includes('prop:'))
             return target;
-        let prop = target.split('prop:')[1].trim();
-        return this.applyProperlyProps(target, [prop]);
+        let arrayFromTarget = target.split('prop:');
+        let prop = arrayFromTarget[1].trim();
+        return this.applyProperlyProps(structure, [prop]);
     }
     transformTo(srt, type) {
         switch (type) {
